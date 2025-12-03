@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Map Display</title>
+
+    <!-- 1. Include Leaflet CSS (Styling for the map) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        /* CSS: Makes the page look nice */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Full viewport height */
+        }
+
+        header {
+            background-color: #2c3e50; /* Dark Blue-Grey */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000; /* Keeps header on top of map */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        /* The container where the map lives */
+        #map-container {
+            flex-grow: 1; /* Fills the rest of the page */
+            width: 100%;
+            background-color: #eee; /* Grey placeholder color */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Location Display</h1>
+    </header>
+
+    <!-- Map Section -->
+    <div id="map-container"></div>
+
+    <!-- 2. Include Leaflet JS (Logic for the map) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // JS: Setup the map
+        
+        // 1. Initialize the map and set coordinates (Latitude, Longitude) and Zoom Level
+        // Coordinates below are for London. You can change them (e.g., 40.7128, -74.0060 for NYC)
+        var map = L.map('map-container').setView([51.505, -0.09], 13);
+
+        // 2. Add the "Tile Layer" (The actual map images from OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // 3. Add a marker (Optional)
+        var marker = L.marker([51.505, -0.09]).addTo(map);
+        marker.bindPopup("<b>Hello!</b><br>I am a simple map.").openPopup();
+    </script>
+
+</body>
+</html>
