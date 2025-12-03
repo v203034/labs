@@ -31,7 +31,33 @@
             text-align: right;
             font-size: 1.5rem;
             font-weight: 400;
+        } /* <--- I added this missing bracket for you */
+
+        /* --- NEW CSS FOR BUTTONS STARTS HERE --- */
+        .button-container {
+            margin-top: 15px;
+            text-align: center; /* Centers the buttons */
         }
+
+        .round-btn {
+            display: inline-block;
+            width: 50px;       /* Size of the circle */
+            height: 50px;
+            border-radius: 50%; /* Makes it round */
+            overflow: hidden;   /* Crops the image to circle */
+            margin: 0 8px;      /* Space between buttons */
+            border: 2px solid #4b54a3; /* Optional border color */
+            vertical-align: middle;
+            background-color: #eee;
+        }
+
+        .round-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* --- NEW CSS ENDS HERE --- */
+
         /* The container where the map lives */
         #map-container {
             width: 80%;
@@ -46,6 +72,21 @@
     <header>
         <h1> Brazilian Citizen Labs </h1>
         <h2> by Valentina Melgar Bermúdez </h2> 
+
+        <!-- --- NEW BUTTONS HTML STARTS HERE --- -->
+        <div class="button-container">
+            <!-- Button 1 (Example: LinkedIn) -->
+            <a href="https://linkedin.com" target="_blank" class="round-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="Link 1">
+            </a>
+
+            <!-- Button 2 (Example: Instagram) -->
+            <a href="https://instagram.com" target="_blank" class="round-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Link 2">
+            </a>
+        </div>
+        <!-- --- NEW BUTTONS HTML ENDS HERE --- -->
+
     </header>
 
     <!-- Map Section -->
@@ -56,21 +97,16 @@
 
     <script>
         // JS: Setup the map
-        
-        // 1. Initialize the map and set coordinates (Latitude, Longitude) and Zoom Level
-        // Coordinates below are for London. You can change them (e.g., 40.7128, -74.0060 for NYC)
         var map = L.map('map-container').setView([51.505, -0.09], 13);
 
-        // 2. Add the "Tile Layer" (The actual map images from OpenStreetMap)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap'
         }).addTo(map);
 
-        // 3. Add a marker (Optional)
         var marker = L.marker([51.505, -0.09]).addTo(map);
         marker.bindPopup("<b>Hello!</b><br>I am a simple map.").openPopup();
     </script>
 
 </body>
-</html
+</html>
