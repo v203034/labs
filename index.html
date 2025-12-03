@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> BR Labs Map </title>
+    <title> BR Citizen Labs Map </title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
@@ -20,11 +20,19 @@
             background-color: #ffffff; /* White */
             color: black;
             padding: 20px;
-            text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 1000;
         }
 
+        .header-content {
+            display: flex;
+            justify-content: spacebetween;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
         header h1 { 
             margin: 0;
             font-size: 2rem;
@@ -71,27 +79,24 @@
 </head>
 <body>
 
-    <!-- Header Section -->
     <header>
-        <h1> Brazilian Citizen Labs </h1>
-        <div class="button-container">
-           
-            <!-- Button 1  -->
-            <a href="https://br.linkedin.com/in/valentina-melgar-bermúdez-a9b3712b8" target="_blank" class="round-btn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="Link 1">
-            </a>
+        <div class="header-content">
+            <h1> Brazilian Citizen Labs </h1>
+            <div class="button-container">
+                
+                <a href="https://br.linkedin.com/in/valentina-melgar-bermúdez-a9b3712b8" target="_blank" class="round-btn">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="Link 1">
+                </a>
 
-            <!-- Button 2 -->
-            <a href="https://instagram.com" target="_blank" class="round-btn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Link 2">
-            </a>
-        </div>
+                <a href="https://instagram.com" target="_blank" class="round-btn">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Link 2">
+                </a> 
+            </div>
       
-        <h2> by Valentina Melgar Bermúdez </h2>
+            <h2> by Valentina Melgar Bermúdez </h2>
 
     </header>
 
-    <!-- Map Section -->
     <div id="map-container"> </div>
 
     <!-- 2. Include Leaflet JS (Logic for the map) -->
