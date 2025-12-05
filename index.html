@@ -115,7 +115,36 @@
             font--size: 1.2rem;
             margin-bottom: 5px;
         }
-                
+
+        <div id="map-wrapper" style="display:flex; width:80%; margin:30px auto; gap:15px;">
+        <div id="filter-menu" style="
+        width:200px;
+        background-color: rgba(0,0,0,0.6);
+        color:white;
+        padding:15px;
+        border-radius:15px;
+        font-size:0.9rem;
+        ">
+        <h4 style="margin-top:0;">Filtros</h4>
+        <label for="estado-filter">Estado:</label>
+        <select id="estado-filter" style="width:100%; margin-bottom:10px;">
+            <option value="">Todos</option>
+        </select>
+
+        <label for="ciudad-filter">Ciudad:</label>
+        <select id="ciudad-filter" style="width:100%; margin-bottom:10px;">
+            <option value="">Todas</option>
+        </select>
+
+        <label for="name-filter">Nombre:</label>
+        <input type="text" id="name-filter" placeholder="Buscar..." style="width:100%; margin-bottom:10px;">
+    </div>
+
+    <!-- Map container -->
+    <div id="map-container" style="flex-grow:1; height:600px; border-radius:15px; overflow:hidden;"></div>
+
+</div>
+        
         #map-container {
             width: 80%;
             height: 600px;
