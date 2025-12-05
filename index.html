@@ -1,98 +1,174 @@
-<h3 class="map-title">Geolocation & Filters</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> BR Citizen Labs Map </title>
 
-<div id="main-container" style="display:flex; width:80%; margin:30px auto; gap:20px;">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-    <!-- Panel de filtros -->
-    <div id="filter-panel" style="background-color:#ffffff; padding:20px; border-radius:25px; flex:0 0 250px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-        <h4 style="color:#373b57; margin-top:0;">Filtros</h4>
-
-        <label for="estado-filter" style="margin-top:15px; display:block;">Estado:</label>
-        <select id="estado-filter" style="width:100%; padding:5px; border-radius:5px; border:1px solid #ccc;">
-            <option value="">Todos</option>
-        </select>
-
-        <label for="ciudad-filter" style="margin-top:15px; display:block;">Ciudad:</label>
-        <select id="ciudad-filter" style="width:100%; padding:5px; border-radius:5px; border:1px solid #ccc;">
-            <option value="">Todas</option>
-        </select>
-
-        <label for="name-filter" style="margin-top:15px; display:block;">Nombre:</label>
-        <input type="text" id="name-filter" placeholder="Buscar por nombre" style="width:100%; padding:5px; border-radius:5px; border:1px solid #ccc;">
-    </div>
-
-    <!-- Contenedor del mapa -->
-    <div id="map-container" style="flex-grow:1; height:600px; border-radius:25px; overflow:hidden;"></div>
-
-</div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-    let map = L.map('map-container').setView([-14.2350, -51.9253], 4);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
-
-    let markers = [];
-    let data = [];
-
-    // Cargar datos desde JSON
-    fetch("geocoded_iniciativas.json")
-    .then(res => res.json())
-    .then(jsonData => {
-        data = jsonData;
-
-        // Llenar dropdowns
-        const estados = [...new Set(data.map(d => d.estado))].sort();
-        const ciudades = [...new Set(data.map(d => d.ciudad))].sort();
-
-        const estadoSelect = document.getElementById("estado-filter");
-        estados.forEach(e => {
-            const option = document.createElement("option");
-            option.value = e;
-            option.textContent = e;
-            estadoSelect.appendChild(option);
-        });
-
-        const ciudadSelect = document.getElementById("ciudad-filter");
-        ciudades.forEach(c => {
-            const option = document.createElement("option");
-            option.value = c;
-            option.textContent = c;
-            ciudadSelect.appendChild(option);
-        });
-
-        updateMarkers();
-    });
-
-    function updateMarkers() {
-        markers.forEach(m => map.removeLayer(m));
-        markers = [];
-
-        const estadoVal = document.getElementById("estado-filter").value.toLowerCase();
-        const ciudadVal = document.getElementById("ciudad-filter").value.toLowerCase();
-        const nameVal = document.getElementById("name-filter").value.toLowerCase();
-
-        const filtered = data.filter(d => 
-            (!estadoVal || d.estado.toLowerCase() === estadoVal) &&
-            (!ciudadVal || d.ciudad.toLowerCase() === ciudadVal) &&
-            (!nameVal || d.name.toLowerCase().includes(nameVal))
-        );
-
-        filtered.forEach(d => {
-            const marker = L.marker([d.lat, d.lon]).addTo(map);
-            marker.bindPopup(`<b>${d.name}</b><br>${d.ciudad}, ${d.estado}`);
-            markers.push(marker);
-        });
-
-        if (filtered.length > 0) {
-            const group = new L.featureGroup(markers);
-            map.fitBounds(group.getBounds().pad(0.2));
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', 'Lucida Console', Monaco, Monospace;
+            background-color: #373b57;
         }
-    }
 
-    document.getElementById("estado-filter").addEventListener("change", updateMarkers);
-    document.getElementById("ciudad-filter").addEventListener("change", updateMarkers);
-    document.getElementById("name-filter").addEventListener("input", updateMarkers);
-</script>
+        header {
+            background-color: #ffffff; /* White */
+            color: black;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            margin: 30px;
+            border-radius: 25px;
+        }
+
+        .header-content {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; 
+            align-items: center;
+            max-width: 1200px;
+            margin: 30 auto;
+            padding: 0 20px;
+        }
+        
+        .header-content h1 {
+            grid-column: 2 / 3; 
+            text-align: center;
+            margin: 0;
+            font-size: 2rem;
+        }
+        
+        header h2 { 
+            color: #4b54a3;
+            text-align: right;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 10px;
+        }
+        
+        .large-left-btn {
+            grid-column: 1 / 2;
+            justify-self: start; 
+            align-self: center; 
+        
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            width: 90px; 
+            height: 90px; 
+            
+            background-color: white; 
+            border: 3px solid black; 
+            text-decoration: none; 
+            border-radius: 15px;   
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .large-left-btn:hover {
+            transform: scale(1.05);
+            background-color: #eee;
+        }
+
+        .large-left-btn img {
+            width: 80%; 
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .button-container {
+            grid-column: 3 / 4; 
+            justify-self: end; 
+            display: flex;
+            gap: 15px;
+        }
+
+        .round-btn {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #ffffff;
+            transition: transform 0.2s;
+        }
+
+        .round-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .round-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .map-title {
+            width: 80%;
+            margin: 0 auto;
+            text-align: left;
+            color: #ffffff;
+            font--size: 1.2rem;
+            margin-bottom: 5px;
+        }
+                
+        #map-container {
+            width: 80%;
+            height: 600px;
+            margin: 30px auto;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="https://drive.google.com/file/d/1XaMD08p6vzy4FUFhi-qIKKLY2gouoTua/view?usp=sharing" target="_blank" class="large-left-btn">
+                <img src="Documentlogo.png" alt="Home Link Icon"> 
+            </a> 
+
+            <h1> Brazilian Citizen Labs </h1>
+            
+            <div class="button-container">
+                
+                <a href="https://br.linkedin.com/in/valentina-melgar-bermúdez-a9b3712b8" target="_blank" class="round-btn">
+                    <img src="LinkedInlogo.png" alt="Link 1">
+                </a>
+
+                <a href="https://tinahmb.substack.com/" target="_blank" class="round-btn">
+                    <img src="Substacklogo.png" alt="Link 2">
+                </a> 
+            </div>
+        </div>
+        
+        <h2> by Valentina Melgar Bermúdez </h2>
+
+    </header>
+
+    <h3 class="map-title"> Geolocation </h3>
+ 
+    <div id="map-container"> </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // JS: Setup the map
+        var map = L.map('map-container').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        var marker = L.marker([51.505, -0.09]).addTo(map);
+        marker.bindPopup("<b>Hello!</b><br>I am a simple map.").openPopup();
+    </script>
+
+</body>
+</html>
