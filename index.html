@@ -186,25 +186,72 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // JS: Setup the map, centered on Brazil
-    var map = L.map('map-container').setView([-14.2350, -51.9253], 4);
+var map = L.map('map-container').setView([-14.2350, -51.9253], 4);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+}).addTo(map);
 
-    // Load geocoded data
-    fetch("geocoded_iniciativas.json")
-    .then(response => response.json())
-    .then(data => {
-        data.forEach(function(item) {
-            var marker = L.marker([item.lat, item.lon]).addTo(map);
-            var popupContent = "<b>" + item.name + "</b><br>" + item.ciudad + ", " + item.estado;
-            marker.bindPopup(popupContent);
-        });
-    })
-    .catch(err => console.error("Error loading map data:", err));
+var markers = [];
+var data = [];
+
+fetch("geocoded_iniciativas.json")
+.then(response => response.json())
+.then(jsonData => {
+    data = jsonData;
+
+    const estados = [...new Set(data.map(d => d.estado))].sort();
+    const ciudades = [...new Set(data.map(d => d.ciudad))].sort();
+
+    const estadoSelect = document.getElementById("estado-filter");
+    estados.forEach(e => {
+        const opt = document.createElement("option");
+        opt.value = e;
+        opt.textContent = e;
+        estadoSelect.appendChild(opt);
+    });
+
+    const ciudadSelect = document.getElementById("ciudad-filter");
+    ciudades.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c;
+        opt.textContent = c;
+        ciudadSelect.appendChild(opt);
+    });
+
+    updateMarkers();
+});
+
+function updateMarkers() {
+    markers.forEach(m => map.removeLayer(m));
+    markers = [];
+
+    const estadoVal = document.getElementById("estado-filter").value.toLowerCase();
+    const ciudadVal = document.getElementById("ciudad-filter").value.toLowerCase();
+    const nameVal = document.getElementById("name-filter").value.toLowerCase();
+
+    const filtered = data.filter(d => 
+        (!estadoVal || d.estado.toLowerCase() === estadoVal) &&
+        (!ciudadVal || d.ciudad.toLowerCase() === ciudadVal) &&
+        (!nameVal || d.name.toLowerCase().includes(nameVal))
+    );
+
+    filtered.forEach(d => {
+        const marker = L.marker([d.lat, d.lon]).addTo(map);
+        marker.bindPopup(`<b>${d.name}</b><br>${d.ciudad}, ${d.estado}`);
+        markers.push(marker);
+    });
+
+    if (filtered.length > 0) {
+        const group = new L.featureGroup(markers);
+        map.fitBounds(group.getBounds().pad(0.2));
+    }
+}
+
+document.getElementById("estado-filter").addEventListener("change", updateMarkers);
+document.getElementById("ciudad-filter").addEventListener("change", updateMarkers);
+document.getElementById("name-filter").addEventListener("input", updateMarkers);
 </script>
 
 </body>
