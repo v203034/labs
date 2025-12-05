@@ -1,145 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BR Citizen Labs Map</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Courier New', 'Lucida Console', Monaco, Monospace;
-        background-color: #373b57;
-        display: flex;
-        height: 100vh;
-    }
-    /* Panel izquierdo */
-    #filter-panel {
-        width: 300px;
-        padding: 20px;
-        background-color: #ffffff;
-        overflow-y: auto;
-        box-shadow: 2px 0 5px rgba(0,0,0,0.3);
-    }
-    #filter-panel h3 {
-        margin-top: 0;
-    }
-    #filter-panel label {
-        display: block;
-        margin-top: 15px;
-        font-weight: bold;
-    }
-    #filter-panel select, #filter-panel input {
-        width: 100%;
-        padding: 5px;
-        margin-top: 5px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
+<h3 class="map-title">Geolocation & Filters</h3>
 
-    /* Mapa derecho */
-    #map-container {
-        flex-grow: 1;
-        height: 100%;
-    }
-</style>
-</head>
-<body>
+<div id="main-container" style="display:flex; width:80%; margin:30px auto; gap:20px;">
 
-<div id="filter-panel">
-    <h3>Filtros</h3>
-    <label for="estado-filter">Estado:</label>
-    <select id="estado-filter">
-        <option value="">Todos</option>
-    </select>
+    <!-- Panel de filtros -->
+    <div id="filter-panel" style="background-color:#ffffff; padding:20px; border-radius:25px; flex:0 0 250px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+        <h4 style="color:#373b57; margin-top:0;">Filtros</h4>
 
-    <label for="ciudad-filter">Ciudad:</label>
-    <select id="ciudad-filter">
-        <option value="">Todas</option>
-    </select>
+        <label for="estado-filter" style="margin-top:15px; display:block;">Estado:</label>
+        <select id="estado-filter" style="width:100%; padding:5px; border-radius:5px; border:1px solid #ccc;">
+            <option value="">Todos</option>
+        </select>
 
-    <label for="name-filter">Nombre:</label>
-    <input type="text" id="name-filter" placeholder="Buscar por nombre">
+        <label for="ciudad-filter" style="margin-top:15px; display:block;">Ciudad:</label>
+        <select id="ciudad-filter" style="width:100%; padding:5px; border-radius:5px; border:1px solid #ccc;">
+            <option value="">Todas</option>
+        </select>
+
+        <label for="name-filter" style="margin-top:15px; display:block;">Nombre:</label>
+        <input type="text" id="name-filter" placeholder="Buscar por nombre" style="width:100%; padding:5px; border-radius:5px; border:1px solid #ccc;">
+    </div>
+
+    <!-- Contenedor del mapa -->
+    <div id="map-container" style="flex-grow:1; height:600px; border-radius:25px; overflow:hidden;"></div>
+
 </div>
-
-<div id="map-container"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-let map = L.map('map-container').setView([-14.2350, -51.9253], 4);
+    let map = L.map('map-container').setView([-14.2350, -51.9253], 4);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap'
-}).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
 
-let markers = [];
-let data = [];
+    let markers = [];
+    let data = [];
 
-// Cargar los datos
-fetch("geocoded_iniciativas.json")
-.then(response => response.json())
-.then(jsonData => {
-    data = jsonData;
+    // Cargar datos desde JSON
+    fetch("geocoded_iniciativas.json")
+    .then(res => res.json())
+    .then(jsonData => {
+        data = jsonData;
 
-    // Poblar filtros únicos
-    const estados = [...new Set(data.map(d => d.estado))].sort();
-    const ciudades = [...new Set(data.map(d => d.ciudad))].sort();
+        // Llenar dropdowns
+        const estados = [...new Set(data.map(d => d.estado))].sort();
+        const ciudades = [...new Set(data.map(d => d.ciudad))].sort();
 
-    const estadoSelect = document.getElementById("estado-filter");
-    estados.forEach(e => {
-        const option = document.createElement("option");
-        option.value = e;
-        option.textContent = e;
-        estadoSelect.appendChild(option);
+        const estadoSelect = document.getElementById("estado-filter");
+        estados.forEach(e => {
+            const option = document.createElement("option");
+            option.value = e;
+            option.textContent = e;
+            estadoSelect.appendChild(option);
+        });
+
+        const ciudadSelect = document.getElementById("ciudad-filter");
+        ciudades.forEach(c => {
+            const option = document.createElement("option");
+            option.value = c;
+            option.textContent = c;
+            ciudadSelect.appendChild(option);
+        });
+
+        updateMarkers();
     });
 
-    const ciudadSelect = document.getElementById("ciudad-filter");
-    ciudades.forEach(c => {
-        const option = document.createElement("option");
-        option.value = c;
-        option.textContent = c;
-        ciudadSelect.appendChild(option);
-    });
+    function updateMarkers() {
+        markers.forEach(m => map.removeLayer(m));
+        markers = [];
 
-    updateMarkers();
-});
+        const estadoVal = document.getElementById("estado-filter").value.toLowerCase();
+        const ciudadVal = document.getElementById("ciudad-filter").value.toLowerCase();
+        const nameVal = document.getElementById("name-filter").value.toLowerCase();
 
-// Función para actualizar marcadores
-function updateMarkers() {
-    // Limpiar marcadores existentes
-    markers.forEach(m => map.removeLayer(m));
-    markers = [];
+        const filtered = data.filter(d => 
+            (!estadoVal || d.estado.toLowerCase() === estadoVal) &&
+            (!ciudadVal || d.ciudad.toLowerCase() === ciudadVal) &&
+            (!nameVal || d.name.toLowerCase().includes(nameVal))
+        );
 
-    const estadoVal = document.getElementById("estado-filter").value.toLowerCase();
-    const ciudadVal = document.getElementById("ciudad-filter").value.toLowerCase();
-    const nameVal = document.getElementById("name-filter").value.toLowerCase();
+        filtered.forEach(d => {
+            const marker = L.marker([d.lat, d.lon]).addTo(map);
+            marker.bindPopup(`<b>${d.name}</b><br>${d.ciudad}, ${d.estado}`);
+            markers.push(marker);
+        });
 
-    const filtered = data.filter(d => {
-        return (!estadoVal || d.estado.toLowerCase() === estadoVal)
-            && (!ciudadVal || d.ciudad.toLowerCase() === ciudadVal)
-            && (!nameVal || d.name.toLowerCase().includes(nameVal));
-    });
-
-    filtered.forEach(d => {
-        const marker = L.marker([d.lat, d.lon]).addTo(map);
-        marker.bindPopup(`<b>${d.name}</b><br>${d.ciudad}, ${d.estado}`);
-        markers.push(marker);
-    });
-
-    // Ajustar vista a los marcadores filtrados
-    if (filtered.length > 0) {
-        const group = new L.featureGroup(markers);
-        map.fitBounds(group.getBounds().pad(0.2));
+        if (filtered.length > 0) {
+            const group = new L.featureGroup(markers);
+            map.fitBounds(group.getBounds().pad(0.2));
+        }
     }
-}
 
-// Event listeners para filtros
-document.getElementById("estado-filter").addEventListener("change", updateMarkers);
-document.getElementById("ciudad-filter").addEventListener("change", updateMarkers);
-document.getElementById("name-filter").addEventListener("input", updateMarkers);
+    document.getElementById("estado-filter").addEventListener("change", updateMarkers);
+    document.getElementById("ciudad-filter").addEventListener("change", updateMarkers);
+    document.getElementById("name-filter").addEventListener("input", updateMarkers);
 </script>
-
-</body>
-</html>
