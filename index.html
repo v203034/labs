@@ -28,21 +28,18 @@
 
         .header-content {
             display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
+            /* La rejilla tiene 3 columnas: [1fr para el botón izq] [auto para el h1 centrado] [1fr para los botones der] */
+            grid-template-columns: 1fr auto 1fr; 
+            align-items: center; /* Centrado vertical */
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
         
-        header h1 { 
-            margin: 0;
-            font-size: 2rem;
-            text-align: center;
-        }
-
+        /* Eliminamos la regla general 'header h1' si existe, y solo usamos la específica para grid */
+        
         .header-content h1 {
-            grid-column: 2 / 3;
+            grid-column: 2 / 3; /* Coloca el título en la columna central */
             text-align: center;
             margin: 0;
             font-size: 2rem;
@@ -56,9 +53,46 @@
             margin-top: 10px;
         }
         
+        /* ESTILO NUEVO: Botón grande a la izquierda */
+        .large-left-btn {
+            /* Posicionamiento en la rejilla */
+            grid-column: 1 / 2;
+            justify-self: start; /* Alinea a la izquierda de la columna 1 */
+            align-self: center; 
+            
+            /* Contenedor del botón */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            width: 50px; /* Tamaño del botón */
+            height: 50px; 
+            
+            background-color: white; 
+            border: 5px solid black; /* Borde grueso negro (rim) */
+            text-decoration: none; 
+            border-radius: 8px; /* Redondeo sutil */
+            
+            /* Opcional: Transiciones */
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .large-left-btn:hover {
+            transform: scale(1.05);
+            background-color: #eee;
+        }
+
+        /* REGLA NUEVA: Asegura que la imagen se ajuste dentro del botón */
+        .large-left-btn img {
+            width: 80%; /* La imagen es 80% del ancho del botón */
+            height: 80%;
+            object-fit: contain;
+        }
+
+        /* Botones sociales a la derecha */
         .button-container {
-            grid-column: 3 / 4;
-            justify-self: end;
+            grid-column: 3 / 4; /* Coloca en la columna 3 */
+            justify-self: end; /* Alinea a la derecha de la columna 3 */
             display: flex;
             gap: 15px;
         }
@@ -82,7 +116,7 @@
             height: 100%;
             object-fit: cover;
         }
-                
+        
         #map-container {
             width: 80%;
             height: 600px;
@@ -96,7 +130,12 @@
 
     <header>
         <div class="header-content">
+            <a href="https://example.com/your-new-link" target="_blank" class="large-left-btn">
+                <img src="your-image-path.png" alt="Home Link Icon"> 
+            </a> 
+
             <h1> Brazilian Citizen Labs </h1>
+            
             <div class="button-container">
                 
                 <a href="https://br.linkedin.com/in/valentina-melgar-bermúdez-a9b3712b8" target="_blank" class="round-btn">
@@ -107,16 +146,14 @@
                     <img src="Substacklogo.png" alt="Link 2">
                 </a> 
             </div>
-         </div>
-            
-      
-    <h2> by Valentina Melgar Bermúdez </h2>
+        </div>
+        
+        <h2> by Valentina Melgar Bermúdez </h2>
 
     </header>
 
     <div id="map-container"> </div>
 
-    <!-- 2. Include Leaflet JS (Logic for the map) -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
