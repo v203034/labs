@@ -155,20 +155,28 @@
  
     <div id="map-container"> </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // JS: Setup the map, centered on Brazil
+    var map = L.map('map-container').setView([-14.2350, -51.9253], 4);
 
-    <script>
-        // JS: Setup the map
-        var map = L.map('map-container').setView([51.505, -0.09], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
-
-        var marker = L.marker([51.505, -0.09]).addTo(map);
-        marker.bindPopup("<b>Hello!</b><br>I am a simple map.").openPopup();
-    </script>
+    // Load geocoded data
+    fetch("geocoded_iniciativas.json")
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(function(item) {
+            var marker = L.marker([item.lat, item.lon]).addTo(map);
+            var popupContent = "<b>" + item.name + "</b><br>" + item.ciudad + ", " + item.estado;
+            marker.bindPopup(popupContent);
+        });
+    })
+    .catch(err => console.error("Error loading map data:", err));
+</script>
 
 </body>
 </html>
