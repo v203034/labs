@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <style>
-/* base from your original page, unchanged except body background override below */
+
 body {
     margin: 0;
     padding: 0;
@@ -102,7 +102,6 @@ header h2 {
     text-align: left;
 }
 
-/* Page menu (shared) */
 .page-menu {
     display: flex;
     gap: 10px;
@@ -126,14 +125,12 @@ header h2 {
     transform: scale(1.05);
 }
 
-/* Active button shows white border via data-page on body */
 body[data-page="ecosystem"] .page-menu a[data-page="ecosystem"],
 body[data-page="geolocation"] .page-menu a[data-page="geolocation"],
 body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
     border-color: white;
 }
 
-/* Keep layout responsive like original */
 #main-content {
     margin: 0 20px 30px 20px;
     border-radius: 15px;
@@ -141,7 +138,6 @@ body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
     background: rgba(0,0,0,0.12);
 }
 
-/* Mobile-friendly */
 @media(min-width: 768px) {
     .header-content { flex-direction: row; justify-content: space-between; align-items: center; }
     .header-content h1 { font-size: 2rem; }
@@ -172,9 +168,6 @@ body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
     <h2>by Valentina Melgar Bermúdez</h2>
 </header>
 
-<h3 class="page-title">Ecosystem</h3>
-
-<!-- Navigation menu (shared across pages) -->
 <nav class="page-menu" aria-label="Site pages">
     <a href="index.html" data-page="geolocation">Geolocation</a>
     <a href="ecosystem.html" data-page="ecosystem">Ecosystem</a>
@@ -182,8 +175,8 @@ body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
 </nav>
 
 <div id="main-content">
-    <!-- Placeholder content for Ecosystem page; add your content here -->
-    <p>This is the Ecosystem page. Keep the header and navigation identical to the Geolocation page. Replace this block with the ecosystem content you want to add later.</p>
+    
+    <p>This is the Ecosystem page.</p>
 </div>
 
 </body>
