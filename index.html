@@ -145,12 +145,11 @@ header h2 {
         height: 600px;
     }
 }
-    /* --- NAV MENU DE PÁGINAS --- */
 .page-menu {
     display: flex;
     gap: 10px;
     justify-content: center;
-    margin: 10px 0 20px 0;
+    margin: 10px 10px;
 }
 
 .page-menu a {
@@ -160,17 +159,16 @@ header h2 {
     text-decoration: none;
     font-family: inherit;
     border-radius: 8px;
-    font-size: 0.9rem;
-    transition: 0.2s;
+    font-size: 0.95rem;
+    transition: 0.15s;
 }
 
 .page-menu a:hover {
     transform: scale(1.05);
 }
 
-/* Borde blanco SOLO en el botón activo */
-body[data-page="geolocation"] .page-menu a[data-page="geolocation"],
 body[data-page="ecosystem"] .page-menu a[data-page="ecosystem"],
+body[data-page="geolocation"] .page-menu a[data-page="geolocation"],
 body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
     border-color: white;
 }
