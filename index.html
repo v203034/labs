@@ -122,13 +122,12 @@ header h2 {
 }
 
 #map-container {
-    height: 400px; /* mobile-friendly height */
+    height: 400px;
     width: 100%;
     border-radius: 15px;
     overflow: hidden;
 }
 
-/* Media queries for tablets and larger screens */
 @media(min-width: 768px) {
     .header-content {
         flex-direction: row;
@@ -191,6 +190,10 @@ header h2 {
 
         <label for="name-filter">Name:</label>
         <input type="text" id="name-filter" placeholder="Buscar...">
+
+        <h4>Filtered Labs:</h4>
+<ul id="lab-list" style="list-style:none; padding-left:0; max-height:200px; overflow-y:auto;"></ul>
+   
     </div>
 
     <div id="map-container"></div>
@@ -233,6 +236,28 @@ fetch("geocoded_iniciativas.json")
     });
 
     updateMarkers();
+    // Actualiza la lista de labs filtrados
+const labList = document.getElementById("lab-list");
+labList.innerHTML = ""; // limpia lista anterior
+
+filtered.forEach(d => {
+    const li = document.createElement("li");
+    li.textContent = d.name;
+    li.style.cursor = "pointer";
+    li.style.marginBottom = "5px";
+    
+    li.addEventListener("click", () => {
+        const marker = markers.find(m => {
+            const latlng = m.getLatLng();
+            return latlng.lat === d.lat && latlng.lng === d.lon;
+        });
+        if (marker) {
+            marker.openPopup();
+            map.setView(marker.getLatLng(), 14); // centra en el marker
+        }
+    });
+
+    labList.appendChild(li);
 });
 
 function updateMarkers() {
