@@ -235,29 +235,7 @@ fetch("geocoded_iniciativas.json")
         ciudadSelect.appendChild(opt);
     });
     
-    updateMarkers(); 
-const labList = document.getElementById("lab-list");
-labList.innerHTML = ""; // limpia lista anterior
-
-filtered.forEach(d => {
-    const li = document.createElement("li");
-    li.textContent = d.name;
-    li.style.cursor = "pointer";
-    li.style.marginBottom = "5px";
-    
-    li.addEventListener("click", () => {
-        const marker = markers.find(m => {
-            const latlng = m.getLatLng();
-            return latlng.lat === d.lat && latlng.lng === d.lon;
-        });
-        if (marker) {
-            marker.openPopup();
-            map.setView(marker.getLatLng(), 14); // centra en el marker
-        }
-    });
-
-    labList.appendChild(li);
-});
+    updateMarkers();
 
 function updateMarkers() {
     markers.forEach(m => map.removeLayer(m));
@@ -273,6 +251,7 @@ function updateMarkers() {
         (!nameVal || d.name.toLowerCase().includes(nameVal))
     );
 
+    // ----------- Markers en el mapa -----------
     filtered.forEach(d => {
         const marker = L.marker([d.lat, d.lon]).addTo(map);
         marker.bindPopup(`<b>${d.name}</b><br>${d.ciudad}, ${d.estado}`);
@@ -283,6 +262,30 @@ function updateMarkers() {
         const group = new L.featureGroup(markers);
         map.fitBounds(group.getBounds().pad(0.2));
     }
+
+    // ----------- Lista de labs en el menú -----------
+    const labList = document.getElementById("lab-list");
+    labList.innerHTML = ""; // limpia lista anterior
+
+    filtered.forEach(d => {
+        const li = document.createElement("li");
+        li.textContent = d.name;
+        li.style.cursor = "pointer";
+        li.style.marginBottom = "5px";
+
+        li.addEventListener("click", () => {
+            const marker = markers.find(m => {
+                const latlng = m.getLatLng();
+                return latlng.lat === d.lat && latlng.lng === d.lon;
+            });
+            if (marker) {
+                marker.openPopup();
+                map.setView(marker.getLatLng(), 14); // centra en el marker
+            }
+        });
+
+        labList.appendChild(li);
+    });
 }
 
 document.getElementById("estado-filter").addEventListener("change", updateMarkers);
