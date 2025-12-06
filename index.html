@@ -152,9 +152,39 @@ header h2 {
         height: 600px;
     }
 }
+    /* --- NAV MENU DE PÁGINAS --- */
+.page-menu {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 10px 0 20px 0;
+}
+
+.page-menu a {
+    padding: 8px 14px;
+    border: 2px solid transparent;
+    color: white;
+    text-decoration: none;
+    font-family: inherit;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+
+.page-menu a:hover {
+    transform: scale(1.05);
+}
+
+/* Borde blanco SOLO en el botón activo */
+body[data-page="geolocation"] .page-menu a[data-page="geolocation"],
+body[data-page="ecosystem"] .page-menu a[data-page="ecosystem"],
+body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
+    border-color: white;
+}
+
 </style>
 </head>
-<body>
+<body class="geolocation" data-page="geolocation">
 
 <header>
     <div class="header-content">
@@ -179,6 +209,12 @@ header h2 {
 
 <h3 class="map-title">Geolocation</h3>
 
+<nav class="page-menu">
+    <a href="index.html" data-page="geolocation">Geolocation</a>
+    <a href="ecosystem.html" data-page="ecosystem">Ecosystem</a>
+    <a href="data-analysis.html" data-page="data-analysis">Data Analysis</a>
+</nav>
+    
 <div id="map-wrapper">
     <div id="filter-menu">
         <h4 style="margin-top:0;">Filters</h4>
