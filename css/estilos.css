@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', 'Lucida Console', Monaco, Monospace;
+}
+
+header {
+    background-color: #ffffff;
+    color: black;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-radius: 15px;
+    margin: 20px;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+nav.page-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+nav.page-buttons a {
+    text-decoration: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    background-color: rgba(0,0,0,0.4);
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+nav.page-buttons a.active {
+    border: 2px solid white;
+}
+
+/* Diferentes fondos por página */
+body.geolocation {
+    background-color: #373b57;
+}
+
+body.ecosystem {
+    background-color: #808000; /* verde aceituna */
+}
+
+body.data-analysis {
+    background-color: #FFA07A; /* salmon crema */
+}
+
+/* Responsive */
+@media(min-width: 768px) {
+    .header-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .header-content h1 {
+        font-size: 2rem;
+    }
+}
