@@ -375,8 +375,8 @@
     "name": "Fab Lab Escola SESI",
     "ciudad": "Sertãozinho",
     "estado": "SP",
-    "lat": 41.398213,
-    "lon": -83.646695
+    "lat": -21.1253403,
+    "lon": -48.0185691
   },
   {
     "name": "Fab Lab Escola SESI",
@@ -431,8 +431,8 @@
     "name": "Fab Lab Escola SESI - Ipiranga",
     "ciudad": "São Paulo",
     "estado": "SP",
-    "lat": 41.398213,
-    "lon": -83.646695
+    "lat": -23.5821085,
+    "lon": -46,6079645
   },
   {
     "name": "Fab Lab Escola SESI - Vila Leopoldina",
@@ -573,13 +573,6 @@
     "estado": "SP",
     "lat": -23.6669527,
     "lon": -46.4616922
-  },
-  {
-    "name": "Fab LAB Newton",
-    "ciudad": "Belo Horizonte",
-    "estado": "MG",
-    "lat": 41.398213,
-    "lon": -83.646695
   },
   {
     "name": "FAB LAB ODONTO",
@@ -890,13 +883,6 @@
     "lon": -54.6162947
   },
   {
-    "name": "LabHacker Cámara de los Diputados",
-    "ciudad": "Brasília",
-    "estado": "DF",
-    "lat": 1.8843821,
-    "lon": 9.794337891283035
-  },
-  {
     "name": "Laboratório Aberto SENAI FIEMG",
     "ciudad": "Belo Horizonte",
     "estado": "MG",
@@ -1112,13 +1098,6 @@
     "estado": "RS",
     "lat": -30.0324999,
     "lon": -51.2303767
-  },
-  {
-    "name": "Thomas Maker",
-    "ciudad": "Brasilia",
-    "estado": "DF",
-    "lat": 15.5906031,
-    "lon": 73.8153985
   },
   {
     "name": "Tiradentes Fab Lab",
