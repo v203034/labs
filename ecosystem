@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecosystem</title>
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="ecosystem" data-page="ecosystem">
+
+<!-- Header con botones -->
+<header>
+    <div class="header-content">
+        <h1>Brazilian Citizen Labs Map</h1>
+
+        <nav class="page-buttons">
+            <a href="index.html" data-page="geolocation">Geolocation</a>
+            <a href="ecosystem.html" data-page="ecosystem">Ecosystem</a>
+            <a href="data-analysis.html" data-page="data-analysis">Data Analysis</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h2 style="color:white; text-align:center; margin-top:50px;">Ecosystem content goes here</h2>
+</main>
+
+<script src="js/scripts.js"></script>
+</body>
+</html>
