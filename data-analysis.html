@@ -1,170 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>BR Citizen Labs — Data Analysis</title>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-<style>
-/* base from your original page, unchanged except body background override below */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Courier New', 'Lucida Console', Monaco, Monospace;
-    background-color: #F4AFAA; /* salmon-cream for Data Analysis page */
-    color: #222;
-}
-
-header {
-    background-color: #ffffff;
-    color: black;
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    border-radius: 15px;
-    margin: 20px;
-}
-
-.header-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.header-content h1 {
-    margin: 0;
-    font-size: 1.8rem;
-    text-align: center;
-}
-
-header h2 {
-    color: #4b54a3;
-    text-align: center;
-    font-size: 1rem;
-    font-weight: 400;
-    top-margin: 0;
-}
-
-.large-left-btn {
-    width: 70px;
-    height: 70px;
-    background-color: white;
-    border: 3px solid black;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s, background-color 0.2s;
-}
-
-.large-left-btn img {
-    width: 80%;
-    height: 80%;
-    object-fit: contain;
-}
-
-.large-left-btn:hover {
-    transform: scale(1.05);
-    background-color: #eee;
-}
-
-.button-container {
-    display: flex;
-    gap: 10px;
-}
-
-.round-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid black;
-    overflow: hidden;
-    background-color: #ffffff;
-    transition: transform 0.2s;
-}
-
-.round-btn img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.round-btn:hover {
-    transform: scale(1.1);
-}
-
-.map-title, .page-title {
-    color: #222;
-    font-size: 1.2rem;
-    margin: 20px;
-    text-align: left;
-}
-
-/* Page menu (shared) */
-.page-menu {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin: 10px 20px;
-}
-
-.page-menu a {
-    padding: 8px 14px;
-    border: 2px solid transparent;
-    color: #222;
-    text-decoration: none;
-    font-family: inherit;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    transition: 0.15s;
-    background: rgba(255,255,255,0.35);
-}
-
-.page-menu a:hover {
-    transform: scale(1.05);
-}
-
-/* Active button shows white border via data-page on body */
-body[data-page="ecosystem"] .page-menu a[data-page="ecosystem"],
-body[data-page="geolocation"] .page-menu a[data-page="geolocation"],
-body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
-    border-color: white;
-}
-
-/* Keep layout responsive like original */
-#main-content {
-    margin: 0 20px 30px 20px;
-    border-radius: 15px;
-    padding: 20px;
-    background: rgba(255,255,255,0.22);
-}
-
-/* Mobile-friendly */
-@media(min-width: 768px) {
-    .header-content { flex-direction: row; justify-content: space-between; align-items: center; }
-    .header-content h1 { font-size: 2rem; }
-    .page-menu { justify-content: flex-start; margin-left: 20px; }
-}
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Analysis</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body class="data-analysis" data-page="data-analysis">
+
+<body data-page="data-analysis">
 
 <header>
     <div class="header-content">
-        <a href="https://drive.google.com/file/d/1XaMD08p6vzy4FUFhi-qIKKLY2gouoTua/view?usp=sharing" target="_blank" class="large-left-btn">
-            <img src="Documentlogo.png" alt="Home Link Icon">
+        <a href="https://drive.google.com" class="large-left-btn">
+            <img src="Documentlogo.png">
         </a>
 
         <h1>Brazilian Citizen Labs Map</h1>
 
         <div class="button-container">
-            <a href="https://br.linkedin.com/in/valentina-melgar-bermúdez-a9b3712b8" target="_blank" class="round-btn">
-                <img src="LinkedInlogo.png" alt="LinkedIn">
+            <a class="round-btn" href="https://linkedin.com">
+                <img src="LinkedInlogo.png">
             </a>
-            <a href="https://tinahmb.substack.com/" target="_blank" class="round-btn">
-                <img src="Substacklogo.png" alt="Substack">
+            <a class="round-btn" href="https://substack.com">
+                <img src="Substacklogo.png">
             </a>
         </div>
     </div>
@@ -172,16 +30,14 @@ body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
     <h2>by Valentina Melgar Bermúdez</h2>
 </header>
 
-<!-- Navigation menu (shared across pages) -->
-<nav class="page-menu" aria-label="Site pages">
+<nav class="page-menu">
     <a href="index.html" data-page="geolocation">Geolocation</a>
     <a href="ecosystem.html" data-page="ecosystem">Ecosystem</a>
     <a href="data-analysis.html" data-page="data-analysis">Data Analysis</a>
 </nav>
 
 <div id="main-content">
-    <!-- Placeholder content for Data Analysis page; add your content here later -->
-    <p>This is the Data Analysis page. Header and navigation are the same as the map page. Replace this block with charts, tables, or other analysis content later.</p>
+    <p>Data Analysis placeholder content.</p>
 </div>
 
 </body>
