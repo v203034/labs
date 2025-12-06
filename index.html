@@ -1,192 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> BR Citizen Labs Map </title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BR Citizen Labs Map</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-    <style>
-        
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Courier New', 'Lucida Console', Monaco, Monospace;
-            background-color: #373b57;
-        }
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', 'Lucida Console', Monaco, Monospace;
+    background-color: #373b57;
+}
 
-        header {
-            background-color: #ffffff; /* White */
-            color: black;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 1000;
-            margin: 30px;
-            border-radius: 25px;
-        }
+header {
+    background-color: #ffffff;
+    color: black;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-radius: 15px;
+    margin: 20px;
+}
 
-        .header-content {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr; 
-            align-items: center;
-            max-width: 1200px;
-            margin: 30 auto;
-            padding: 0 20px;
-        }
-        
-        .header-content h1 {
-            grid-column: 2 / 3; 
-            text-align: center;
-            margin: 0;
-            font-size: 2rem;
-        }
-        
-        header h2 { 
-            color: #4b54a3;
-            text-align: right;
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-top: 10px;
-        }
-        
-        .large-left-btn {
-            grid-column: 1 / 2;
-            justify-self: start; 
-            align-self: center; 
-        
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            
-            width: 90px; 
-            height: 90px; 
-            
-            background-color: white; 
-            border: 3px solid black; 
-            text-decoration: none; 
-            border-radius: 15px;   
-            transition: transform 0.2s, background-color 0.2s;
-        }
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
 
-        .large-left-btn:hover {
-            transform: scale(1.05);
-            background-color: #eee;
-        }
+.header-content h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    text-align: center;
+}
 
-        .large-left-btn img {
-            width: 80%; 
-            height: 80%;
-            object-fit: contain;
-        }
+.header-content h2 {
+    color: #4b54a3;
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
+    text-align: center;
+}
 
-        .button-container {
-            grid-column: 3 / 4; 
-            justify-self: end; 
-            display: flex;
-            gap: 15px;
-        }
+.large-left-btn {
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s;
+}
 
-        .round-btn {
-            display: block;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            background-color: #ffffff;
-            transition: transform 0.2s;
-        }
+.large-left-btn img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
 
-        .round-btn:hover {
-            transform: scale(1.1);
-        }
+.large-left-btn:hover {
+    transform: scale(1.05);
+    background-color: #eee;
+}
 
-        .round-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .map-title {
-            width: 80%;
-            margin: 0 auto;
-            text-align: left;
-            color: #ffffff;
-            font--size: 1.2rem;
-            margin-bottom: 5px;
-        }
+.button-container {
+    display: flex;
+    gap: 10px;
+}
 
-    <div id="map-container" style="flex-grow:1; height:600px; border-radius:15px; overflow:hidden;"></div>
+.round-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: transform 0.2s;
+}
 
-</div>
-        
-        #map-container {
-            height: 600px;
-            margin: 30px auto;
-            border-radius: 25px;
-            overflow: hidden;
-        }
-    </style>
+.round-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.round-btn:hover {
+    transform: scale(1.1);
+}
+
+.map-title {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin: 20px;
+    text-align: left;
+}
+
+#map-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px 30px 20px;
+    gap: 15px;
+}
+
+#filter-menu {
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+#filter-menu select,
+#filter-menu input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#map-container {
+    height: 400px; /* mobile-friendly height */
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Media queries for tablets and larger screens */
+@media(min-width: 768px) {
+    .header-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header-content h1 {
+        font-size: 2rem;
+    }
+
+    #map-wrapper {
+        flex-direction: row;
+    }
+
+    #filter-menu {
+        width: 200px;
+        flex-shrink: 0;
+    }
+
+    #map-container {
+        height: 600px;
+    }
+}
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="header-content">
-            <a href="https://drive.google.com/file/d/1XaMD08p6vzy4FUFhi-qIKKLY2gouoTua/view?usp=sharing" target="_blank" class="large-left-btn">
-                <img src="Documentlogo.png" alt="Home Link Icon"> 
-            </a> 
+<header>
+    <div class="header-content">
+        <a href="https://drive.google.com/file/d/1XaMD08p6vzy4FUFhi-qIKKLY2gouoTua/view?usp=sharing" target="_blank" class="large-left-btn">
+            <img src="Documentlogo.png" alt="Home Link Icon"> 
+        </a>
 
-            <h1> Brazilian Citizen Labs Map </h1>
-            
-            <div class="button-container">
-                
-                <a href="https://br.linkedin.com/in/valentina-melgar-bermúdez-a9b3712b8" target="_blank" class="round-btn">
-                    <img src="LinkedInlogo.png" alt="Link 1">
-                </a>
+        <h1>Brazilian Citizen Labs Map</h1>
 
-                <a href="https://tinahmb.substack.com/" target="_blank" class="round-btn">
-                    <img src="Substacklogo.png" alt="Link 2">
-                </a> 
-            </div>
+        <div class="button-container">
+            <a href="https://br.linkedin.com/in/valentina-melgar-bermúdez-a9b3712b8" target="_blank" class="round-btn">
+                <img src="LinkedInlogo.png" alt="LinkedIn">
+            </a>
+            <a href="https://tinahmb.substack.com/" target="_blank" class="round-btn">
+                <img src="Substacklogo.png" alt="Substack">
+            </a>
         </div>
-        
-        <h2> by Valentina Melgar Bermúdez </h2>
-
-    </header>
-
-    <h3 class="map-title"> Geolocation </h3>
-
-<div id="map-wrapper" style="display:flex; margin:30px auto; gap:15px; max-width:calc(100% - 60px);">
-
-    <div id="filter-menu" style="
-        width: 200px;
-        background-color: rgba(0,0,0,0.6);
-        color: white;
-        padding: 15px;
-        border-radius: 15px;
-        font-size: 0.9rem;
-    ">
-        <h4 style="margin-top:0;">Filters</h4>
-        <label for="estado-filter">State:</label>
-        <select id="estado-filter" style="width:100%; margin-bottom:10px;">
-            <option value="">All</option>
-        </select>
-
-        <label for="ciudad-filter">City:</label>
-        <select id="ciudad-filter" style="width:100%; margin-bottom:10px;">
-            <option value="">All</option>
-        </select>
-
-        <label for="name-filter">Name:</label>
-        <input type="text" id="name-filter" placeholder="Buscar..." style="width:100%; margin-bottom:10px;">
     </div>
 
-    <!-- Map container -->
-    <div id="map-container" style="flex-grow:1; height:600px; border-radius:15px; overflow:hidden;"></div>
+    <h2>by Valentina Melgar Bermúdez</h2>
+</header>
 
+<h3 class="map-title">Geolocation</h3>
+
+<div id="map-wrapper">
+    <div id="filter-menu">
+        <h4 style="margin-top:0;">Filters</h4>
+        <label for="estado-filter">State:</label>
+        <select id="estado-filter"><option value="">All</option></select>
+
+        <label for="ciudad-filter">City:</label>
+        <select id="ciudad-filter"><option value="">All</option></select>
+
+        <label for="name-filter">Name:</label>
+        <input type="text" id="name-filter" placeholder="Buscar...">
+    </div>
+
+    <div id="map-container"></div>
 </div>
-
-    <div id="map-container"> </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
