@@ -1,11 +1,27 @@
+/* ---------- BASE LAYOUT ---------- */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Courier New', 'Lucida Console', Monaco, Monospace;
+    color: white;
 }
 
+/* Page-specific background colors (via data-page attribute) */
+body[data-page="geolocation"] {
+    background-color: #1e1e1e;
+}
+
+body[data-page="ecosystem"] {
+    background-color: #808000; /* olive */
+}
+
+body[data-page="data-analysis"] {
+    background-color: #F4AFAA; /* salmon-cream */
+}
+
+/* ---------- HEADER ---------- */
 header {
-    background-color: #ffffff;
+    background-color: white;
     color: black;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -26,48 +42,121 @@ header {
     text-align: center;
 }
 
-nav.page-buttons {
+header h2 {
+    color: #4b54a3;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/* ---------- LEFT LOGO BUTTON ---------- */
+.large-left-btn {
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 15px;
     display: flex;
-    gap: 15px;
-    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s;
 }
 
-nav.page-buttons a {
-    text-decoration: none;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    background-color: rgba(0,0,0,0.4);
+.large-left-btn img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+.large-left-btn:hover {
+    transform: scale(1.05);
+    background-color: #eee;
+}
+
+/* ---------- ROUND BUTTONS ---------- */
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.round-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid black;
+    overflow: hidden;
+    background-color: white;
+    transition: transform 0.2s;
+}
+
+.round-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.round-btn:hover {
+    transform: scale(1.1);
+}
+
+/* ---------- NAV MENU ---------- */
+.page-menu {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 10px 20px;
+}
+
+.page-menu a {
+    padding: 8px 14px;
     border: 2px solid transparent;
-    transition: all 0.2s;
+    color: white;
+    text-decoration: none;
+    font-family: inherit;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: rgba(0,0,0,0.15);
+    transition: 0.15s;
 }
 
-nav.page-buttons a.active {
-    border: 2px solid white;
+.page-menu a:hover {
+    transform: scale(1.05);
 }
 
-/* Diferentes fondos por página */
-body.geolocation {
-    background-color: #373b57;
+/* active page border */
+body[data-page="geolocation"] .page-menu a[data-page="geolocation"],
+body[data-page="ecosystem"] .page-menu a[data-page="ecosystem"],
+body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
+    border-color: white !important;
 }
 
-body.ecosystem {
-    background-color: #808000; /* verde aceituna */
+/* ---------- CONTENT BOX ---------- */
+#main-content {
+    margin: 0 20px 30px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.15);
 }
 
-body.data-analysis {
-    background-color: #FFA07A; /* salmon crema */
+/* ---------- MAP BOX (only for geolocation page) ---------- */
+#map-container {
+    width: 100%;
+    height: 500px;
+    border-radius: 15px;
+    margin-top: 20px;
 }
 
-/* Responsive */
+/* ---------- RESPONSIVE ---------- */
 @media(min-width: 768px) {
     .header-content {
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
     }
     .header-content h1 {
         font-size: 2rem;
+    }
+    .page-menu {
+        justify-content: flex-start;
+        margin-left: 20px;
     }
 }
