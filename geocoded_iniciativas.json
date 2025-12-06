@@ -1154,5 +1154,75 @@
     "estado": "SP",
     "lat": -23.5506507,
     "lon": -46.6333824
-  }
+  },
+  {
+    "name": "ANDROIDES ANDRÓGINOS",
+    "ciudad": "Itinerante",
+    "estado": "PA",
+    "lat": -1.4152568,
+    "lon": -48.4596483
+  },
+  {
+    "name": "Fab Lab da Firjan",
+    "ciudad": "Resende",
+    "estado": "RJ",
+    "lat": -22.4633804,
+    "lon": -44.4575182
+  },
+  {
+    "name": "Fab Lab da Firjan SENAI",
+    "ciudad": "Itaguaí",
+    "estado": "RJ",
+    "lat": -22.8644678,
+    "lon": -43.7499984
+  },
+  {
+    "name": "Fab Lab da Firjan SENAI",
+    "ciudad": "Três Rios",
+    "estado": "RJ",
+    "lat": -22.1223298,
+    "lon": -43.2101525
+  },
+  {
+    "name": "Fab Lab da Firjan SENAI",
+    "ciudad": "Petrópolis",
+    "estado": "RJ",
+    "lat": -22.5040677,
+    "lon": -43.1708967
+  },
+  {
+    "name": "Fab Lab Escola SESI",
+    "ciudad": "Ipiranga",
+    "estado": "SP",
+    "lat": -23.5822409,
+    "lon": -46.6080326
+  },
+  {
+    "name": "Fab LAB Newton",
+    "ciudad": "Belo Horizonte",
+    "estado": "MG",
+    "lat": -19.9058902,
+    "lon": -43.9637778
+  },
+  {
+    "name": "FabLab da Firjan SENAI",
+    "ciudad": "Nova Friburgo",
+    "estado": "RJ",
+    "lat": -22.2844458,
+    "lon": -42.5330383
+  },
+  {
+    "name": "LabHacker Cámara de los Diputados",
+    "ciudad": "Brasília",
+    "estado": "DF",
+    "lat": -15.8027201,
+    "lon": -47.8651494
+  },
+  {
+    "name": "Thomas Maker",
+    "ciudad": "Brasilia",
+    "estado": "DF",
+    "lat": -15.7684689,
+    "lon": -47.8741576
+  },
 ]
