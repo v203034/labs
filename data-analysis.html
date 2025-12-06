@@ -8,12 +8,11 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <style>
-/* base from your original page, unchanged except body background override below */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Courier New', 'Lucida Console', Monaco, Monospace;
-    background-color: #F4AFAA; /* salmon-cream for Data Analysis page */
+    background-color: #F4AFAA;
     color: #222;
 }
 
@@ -95,14 +94,6 @@ header h2 {
     transform: scale(1.1);
 }
 
-.map-title, .page-title {
-    color: #222;
-    font-size: 1.2rem;
-    margin: 20px;
-    text-align: left;
-}
-
-/* Page menu (shared) */
 .page-menu {
     display: flex;
     gap: 10px;
@@ -119,7 +110,6 @@ header h2 {
     border-radius: 8px;
     font-size: 0.95rem;
     transition: 0.15s;
-    background: rgba(255,255,255,0.35);
 }
 
 .page-menu a:hover {
@@ -172,9 +162,6 @@ body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
     <h2>by Valentina Melgar Bermúdez</h2>
 </header>
 
-<h3 class="page-title">Data Analysis</h3>
-
-<!-- Navigation menu (shared across pages) -->
 <nav class="page-menu" aria-label="Site pages">
     <a href="index.html" data-page="geolocation">Geolocation</a>
     <a href="ecosystem.html" data-page="ecosystem">Ecosystem</a>
