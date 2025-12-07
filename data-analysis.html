@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>BR Citizen Labs — Data Analysis</title>
+<title>BR Citizen Labs — Analysis</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
@@ -116,14 +116,12 @@ header h2 {
     transform: scale(1.05);
 }
 
-/* Active button shows white border via data-page on body */
 body[data-page="ecosystem"] .page-menu a[data-page="ecosystem"],
 body[data-page="geolocation"] .page-menu a[data-page="geolocation"],
 body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
     border-color: white;
 }
 
-/* Keep layout responsive like original */
 #main-content {
     margin: 0 20px 30px 20px;
     border-radius: 15px;
@@ -131,7 +129,6 @@ body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
     background: rgba(255,255,255,0.22);
 }
 
-/* Mobile-friendly */
 @media(min-width: 768px) {
     .header-content { flex-direction: row; justify-content: space-between; align-items: center; }
     .header-content h1 { font-size: 2rem; }
@@ -147,7 +144,7 @@ body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
             <img src="Documentlogo.png" alt="Home Link Icon">
         </a>
 
-        <h1>Brazilian Citizen Labs Map</h1>
+        <h1>Brazilian Citizen Labs</h1>
 
         <div class="button-container">
             <a href="https://br.linkedin.com/in/valentina-melgar-bermúdez-a9b3712b8" target="_blank" class="round-btn">
@@ -165,12 +162,11 @@ body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
 <nav class="page-menu" aria-label="Site pages">
     <a href="index.html" data-page="geolocation">Geolocation</a>
     <a href="ecosystem.html" data-page="ecosystem">Ecosystem</a>
-    <a href="data-analysis.html" data-page="data-analysis">Data Analysis</a>
+    <a href="data-analysis.html" data-page="data-analysis">Analysis</a>
 </nav>
 
 <div id="main-content">
-    <!-- Placeholder content for Data Analysis page; add your content here later -->
-    <p>This is the Data Analysis page. Header and navigation are the same as the map page. Replace this block with charts, tables, or other analysis content later.</p>
+    <p>This is the Data Analysis page.</p>
 </div>
 
 </body>
