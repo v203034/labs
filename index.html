@@ -169,7 +169,7 @@ header h2 {
 
 body[data-page="ecosystem"] .page-menu a[data-page="ecosystem"],
 body[data-page="geolocation"] .page-menu a[data-page="geolocation"],
-body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
+body[data-page=analysis"] .page-menu a[data-page="analysis"] {
     border-color: white;
 }
 
@@ -183,7 +183,7 @@ body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
             <img src="Documentlogo.png" alt="Home Link Icon"> 
         </a>
 
-        <h1>Brazilian Citizen Labs Map</h1>
+        <h1>Brazilian Citizen Labs</h1>
 
         <div class="button-container">
             <a href="https://br.linkedin.com/in/valentina-melgar-bermúdez-a9b3712b8" target="_blank" class="round-btn">
@@ -201,7 +201,7 @@ body[data-page="data-analysis"] .page-menu a[data-page="data-analysis"] {
 <nav class="page-menu">
     <a href="index.html" data-page="geolocation">Geolocation</a>
     <a href="ecosystem.html" data-page="ecosystem">Ecosystem</a>
-    <a href="data-analysis.html" data-page="data-analysis">Data Analysis</a>
+    <a href="analysis.html" data-page="analysis">Analysis</a>
 </nav>
     
 <div id="map-wrapper">
@@ -236,7 +236,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var markers = [];
 var data = [];
 
-// Función para actualizar markers y lista
 function updateMarkers() {
     markers.forEach(m => map.removeLayer(m));
     markers = [];
@@ -251,7 +250,6 @@ function updateMarkers() {
         (!nameVal || d.name.toLowerCase().includes(nameVal))
     );
 
-    // Markers en el mapa
     filtered.forEach(d => {
         const marker = L.marker([d.lat, d.lon]).addTo(map);
         marker.bindPopup(`<b>${d.name}</b><br>${d.ciudad}, ${d.estado}`);
@@ -263,9 +261,8 @@ function updateMarkers() {
         map.fitBounds(group.getBounds().pad(0.2));
     }
 
-    // Lista de labs
     const labList = document.getElementById("lab-list");
-    labList.innerHTML = ""; // limpia lista anterior
+    labList.innerHTML = "";
 
     filtered.forEach(d => {
         const li = document.createElement("li");
@@ -288,7 +285,6 @@ function updateMarkers() {
     });
 }
 
-// Carga de datos y configuración de filtros
 fetch("geocoded_iniciativas.json")
 .then(response => response.json())
 .then(jsonData => {
