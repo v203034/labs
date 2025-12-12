@@ -1,0 +1,445 @@
+{
+    "Civiles": {
+        "coords": {
+            "cx": 200,
+            "cy": 150,
+            "r": 80,
+            "name": "Solo Civiles"
+        },
+        "affiliation_groups": {
+            "Firjan/SENAI": {
+                "total_labs": 11,
+                "network_subgroups": {
+                    "Federa\u00e7\u00e3o das Ind\u00fastrias do Estado do Rio de Janeiro (Firjan)/(Servicio Nacional de Aprendizaje Industrial) SENAI": {
+                        "lab_count": 9
+                    },
+                    "Federa\u00e7\u00e3o das Ind\u00fastrias do Estado do Rio de Janeiro (Firjan)/Servicio Nacional de Aprendizaje Industrial (SENAI)": {
+                        "lab_count": 2
+                    }
+                }
+            },
+            "Grupo Tiradentes": {
+                "total_labs": 1,
+                "network_subgroups": {
+                    "Tiradentes Innovation Center": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "Movimento +Social Good": {
+                "total_labs": 1,
+                "network_subgroups": {
+                    "Funda\u00e7\u00e3o das Na\u00e7\u00f5es Unidas": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "None": {
+                "total_labs": 45,
+                "network_subgroups": {
+                    "Agencia Kerno": {
+                        "lab_count": 1
+                    },
+                    "Caravana Digital SIP": {
+                        "lab_count": 1
+                    },
+                    "Fora do Eixo": {
+                        "lab_count": 1
+                    },
+                    "Grupo de Assessoria de Mobiliza\u00e7\u00e3o de Talentos (GAMT)": {
+                        "lab_count": 1
+                    },
+                    "Lab Maker Living Lab": {
+                        "lab_count": 1
+                    },
+                    "Machado Meyer Advogados": {
+                        "lab_count": 1
+                    },
+                    "Makers Manaus": {
+                        "lab_count": 1
+                    },
+                    "Midia Ninja": {
+                        "lab_count": 1
+                    },
+                    "None": {
+                        "lab_count": 32
+                    },
+                    "O nosso papel ONG": {
+                        "lab_count": 1
+                    },
+                    "Parque Tecnol\u00f3gico de Sorocaba": {
+                        "lab_count": 1
+                    },
+                    "Parque de Desarrollo Tecnol\u00f3gico (PADETEC)": {
+                        "lab_count": 1
+                    },
+                    "SHC - Santos Hacker Clube": {
+                        "lab_count": 1
+                    },
+                    "Servi\u00e7o Brasileiro de Apoio \u00e0s Micro e Pequenas Empresas de Mato Grosso do Sul (SEBRAE MS)": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "SENAI": {
+                "total_labs": 2,
+                "network_subgroups": {
+                    "Federa\u00e7\u00e3o das Ind\u00fastrias do Estado de Minas Gerais (FIEMG)": {
+                        "lab_count": 1
+                    },
+                    "Servicio Nacional de Aprendizaje Industrial (SENAI)": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "Sistema Federaci\u00f3n de las industrias del Estado de Paran\u00e1 (FIEP)": {
+                "total_labs": 2,
+                "network_subgroups": {
+                    "SESI/SENAI/Instituto Euvaldo Lodi (IEL)": {
+                        "lab_count": 2
+                    }
+                }
+            }
+        }
+    },
+    "Civiles/Educacionales": {
+        "coords": {
+            "cx": 275,
+            "cy": 120,
+            "r": 40,
+            "name": "C \u2229 E"
+        },
+        "affiliation_groups": {
+            "Escola SESI": {
+                "total_labs": 30,
+                "network_subgroups": {
+                    "Servicio Social de la Industria (SESI)": {
+                        "lab_count": 30
+                    }
+                }
+            },
+            "None": {
+                "total_labs": 1,
+                "network_subgroups": {
+                    "Funda\u00e7\u00e3o Helena Antipoff": {
+                        "lab_count": 1
+                    }
+                }
+            }
+        }
+    },
+    "Civiles/Educacionales/Gubernamentales": {
+        "coords": {
+            "cx": 50,
+            "cy": 50,
+            "r": 50
+        },
+        "affiliation_groups": {
+            "None": {
+                "total_labs": 2,
+                "network_subgroups": {
+                    "SENAI/Universidad Federal de Goi\u00e1s": {
+                        "lab_count": 1
+                    },
+                    "Universidad Estatal de Mato Grosso do Sul (UEMS)/SENAI": {
+                        "lab_count": 1
+                    }
+                }
+            }
+        }
+    },
+    "Civiles/Gubernamentales": {
+        "coords": {
+            "cx": 230,
+            "cy": 200,
+            "r": 40,
+            "name": "C \u2229 G"
+        },
+        "affiliation_groups": {
+            "FAB LAB LIVRE SP": {
+                "total_labs": 13,
+                "network_subgroups": {
+                    "Pefectura Municipal SP/Instituto de Tecnologia Social (ITS) BRASIL": {
+                        "lab_count": 13
+                    }
+                }
+            }
+        }
+    },
+    "Educacionales": {
+        "coords": {
+            "cx": 350,
+            "cy": 150,
+            "r": 80,
+            "name": "Solo Educacionales"
+        },
+        "affiliation_groups": {
+            "Amadomaker": {
+                "total_labs": 1,
+                "network_subgroups": {
+                    "Universidad de Passo Fundo (UPF)": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "American Spaces": {
+                "total_labs": 2,
+                "network_subgroups": {
+                    "ABA": {
+                        "lab_count": 1
+                    },
+                    "Casa Thomas Jefferson/Departamento de Estado de EUA": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "Escola Concept": {
+                "total_labs": 3,
+                "network_subgroups": {
+                    "Escola Concept": {
+                        "lab_count": 3
+                    }
+                }
+            },
+            "Fablab Mau\u00e1": {
+                "total_labs": 2,
+                "network_subgroups": {
+                    "Instituto Mau\u00e1 de Tecnologia": {
+                        "lab_count": 2
+                    }
+                }
+            },
+            "Facens": {
+                "total_labs": 2,
+                "network_subgroups": {
+                    "Faculdade de Engenharia de Sorocaba (Facens)": {
+                        "lab_count": 2
+                    }
+                }
+            },
+            "None": {
+                "total_labs": 13,
+                "network_subgroups": {
+                    "Centro Universitario Para\u00edso (UniFAP)": {
+                        "lab_count": 1
+                    },
+                    "Centro Universitario de Excelencia en Guarulhos (ENIAC)": {
+                        "lab_count": 1
+                    },
+                    "Centro universitario de Patos de Minas (Unipam)": {
+                        "lab_count": 1
+                    },
+                    "Escola Castanheiras": {
+                        "lab_count": 1
+                    },
+                    "Funda\u00e7\u00e3o Torino": {
+                        "lab_count": 1
+                    },
+                    "Newton": {
+                        "lab_count": 1
+                    },
+                    "Pontificia Universidad Cat\u00f3lica de R\u00edo Grande del Sur (PUCRS)": {
+                        "lab_count": 1
+                    },
+                    "Sinergia": {
+                        "lab_count": 1
+                    },
+                    "Universidad de Araraquara (Uniara)": {
+                        "lab_count": 1
+                    },
+                    "Universidad de Vale do Rio dos Sinos (Unisinos)": {
+                        "lab_count": 1
+                    },
+                    "Universidad de la Salle (Unilasalle)": {
+                        "lab_count": 1
+                    },
+                    "Universidade Paulista (UNIP)": {
+                        "lab_count": 1
+                    },
+                    "Universidade Presbiteriana Mackenzie": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "Pronto3D": {
+                "total_labs": 1,
+                "network_subgroups": {
+                    "Universidad Comunitaria de la regi\u00f3n de Chapec\u00f3 (Unochapec\u00f3)": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "\u00c2nima Lab": {
+                "total_labs": 2,
+                "network_subgroups": {
+                    "Centro Universitario de Belo Horizonte (UniBH)": {
+                        "lab_count": 1
+                    },
+                    "S\u00e3o Judas Unimonte": {
+                        "lab_count": 1
+                    }
+                }
+            }
+        }
+    },
+    "Educacionales/Gubernamentales": {
+        "coords": {
+            "cx": 320,
+            "cy": 200,
+            "r": 40,
+            "name": "E \u2229 G"
+        },
+        "affiliation_groups": {
+            "Amadomaker": {
+                "total_labs": 1,
+                "network_subgroups": {
+                    "Prefectura Municipal de Passo Fundo/Escuela de las profesiones": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "Enactus": {
+                "total_labs": 1,
+                "network_subgroups": {
+                    "Universidade Federal do Rio de Janeiro (UFRJ)": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "IFMaker": {
+                "total_labs": 1,
+                "network_subgroups": {
+                    "Instituto Federal de Tocantins (IFTO)": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "Lablivre/Wikilab": {
+                "total_labs": 1,
+                "network_subgroups": {
+                    "Universidad Federal ABC (UFABC)": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "None": {
+                "total_labs": 23,
+                "network_subgroups": {
+                    "\"Instituto Estadual de Educa\u00e7\u00e3o": {
+                        "lab_count": 1
+                    },
+                    "\"Instituto Federal de Educaci\u00f3n": {
+                        "lab_count": 3
+                    },
+                    "\"Instituto Federal de Educa\u00e7\u00e3o": {
+                        "lab_count": 1
+                    },
+                    "Centro de Tecnologia Acad\u00eamica do Instituto de F\u00edsica (CTA IF)/Universidad Federal de R\u00edo Grande del Sur": {
+                        "lab_count": 1
+                    },
+                    "Escola Municipal de Ensino Fundamental Doutor Paulo da Silva Couto": {
+                        "lab_count": 1
+                    },
+                    "Faculdade de Tecnologia de Araraquara (Fatec Arq)-Centro Paula Souza": {
+                        "lab_count": 1
+                    },
+                    "Instituto An\u00edsio Teixeira": {
+                        "lab_count": 1
+                    },
+                    "Instituto de F\u00edsica de la Universidad de SP (IFUSP)": {
+                        "lab_count": 1
+                    },
+                    "Universidad Estatal de Campinas (UNICAMP)": {
+                        "lab_count": 1
+                    },
+                    "Universidad Federal de Mato Grosso (UFMG)": {
+                        "lab_count": 1
+                    },
+                    "Universidad Federal de Mato Grosso (UFMT)": {
+                        "lab_count": 1
+                    },
+                    "Universidad Federal de Para\u00edba (UFPB)": {
+                        "lab_count": 1
+                    },
+                    "Universidad Federal de Rio Grande do Sur (UFRGS)": {
+                        "lab_count": 1
+                    },
+                    "Universidad Federal de R\u00edo Grande del Sur": {
+                        "lab_count": 1
+                    },
+                    "Universidad Federal de Santa Catarina (UFSC)": {
+                        "lab_count": 1
+                    },
+                    "Universidad Federal de S\u00e3o Carlos (UFSCar)": {
+                        "lab_count": 1
+                    },
+                    "Universidad Federal del Oeste de Bahia (UFOB)": {
+                        "lab_count": 1
+                    },
+                    "Universidad de Blumenau (FURB)": {
+                        "lab_count": 1
+                    },
+                    "Universidade Estadual Paulista (UNESP)/Sagui lab": {
+                        "lab_count": 1
+                    },
+                    "Universidade Federal do Piau\u00ed (UFPI)": {
+                        "lab_count": 1
+                    },
+                    "Universidade Federal do Rio de Janeiro (UFRJ)": {
+                        "lab_count": 1
+                    }
+                }
+            },
+            "Pronto3D": {
+                "total_labs": 1,
+                "network_subgroups": {
+                    "Universidad Federal de Santa Catarina (UFSC)": {
+                        "lab_count": 1
+                    }
+                }
+            }
+        }
+    },
+    "Gubernamentales": {
+        "coords": {
+            "cx": 275,
+            "cy": 250,
+            "r": 80,
+            "name": "Solo Gubernamentales"
+        },
+        "affiliation_groups": {
+            "None": {
+                "total_labs": 9,
+                "network_subgroups": {
+                    "C\u00e1mara de Diputados Federal": {
+                        "lab_count": 1
+                    },
+                    "Ministerio de cuitura": {
+                        "lab_count": 1
+                    },
+                    "Ministerio de cultura": {
+                        "lab_count": 1
+                    },
+                    "Prefectura Jundia\u00ed": {
+                        "lab_count": 1
+                    },
+                    "Prefectura Municipal Araras": {
+                        "lab_count": 1
+                    },
+                    "Prefectura Municipal de Curitiba": {
+                        "lab_count": 1
+                    },
+                    "Prefectura de Santos": {
+                        "lab_count": 1
+                    },
+                    "Secretaria Municipal de Cultura y Econom\u00eda Creativa": {
+                        "lab_count": 1
+                    },
+                    "Secretaria Municipal de Inova\u00e7\u00e3o e Tecnologia": {
+                        "lab_count": 1
+                    }
+                }
+            }
+        }
+    }
+}
