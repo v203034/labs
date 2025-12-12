@@ -7,6 +7,9 @@
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/venn.js@0.2.20/venn.js"></script>
+
 <style>
 
 body {
@@ -130,6 +133,28 @@ body[data-page="analysis"] .page-menu a[data-page="analysis"] {
     background: rgba(0,0,0,0.12);
 }
 
+/* 2. ESTILOS CSS PARA LA VISUALIZACIÓN */
+#venn-diagram-svg-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Estilo de los círculos de la librería Venn.js */
+.venn-area {
+    fill-opacity: 0.6;
+    stroke: #fff;
+    stroke-width: 2px;
+    transition: fill-opacity 0.2s;
+}
+
+/* Estilo de los puntos (dots) */
+.lab-dot {
+    stroke: none;
+    transition: opacity 0.3s;
+    cursor: pointer;
+}
+
 @media(min-width: 768px) {
     .header-content { flex-direction: row; justify-content: space-between; align-items: center; }
     .header-content h1 { font-size: 2rem; }
@@ -167,9 +192,219 @@ body[data-page="analysis"] .page-menu a[data-page="analysis"] {
 </nav>
 
 <div id="main-content">
+    <p>Haz clic en las áreas del diagrama para filtrar.</p>
     
-    <p>This is the Ecosystem page.</p>
+    <div id="venn-diagram-svg-wrapper"></div>
 </div>
+
+<script>
+    
+    // --- IMPORTANTE: REEMPLAZAR ESTO ---
+    // *** DEBES REEMPLAZAR el contenido de LAB_STRUCTURE_DATA con el JSON COMPLETO ***
+    // *** que descargaste del archivo 'lab_structure.json'. ***
+    // (Este es solo un placeholder basado en el preview)
+    const LAB_STRUCTURE_DATA = {
+        "Civiles": {
+            "coords": { "cx": 200, "cy": 150, "r": 80, "name": "Solo Civiles" },
+            "affiliation_groups": { /* Pegar aquí tus datos reales */ }
+        },
+        "Educacionales": {
+            "coords": { "cx": 350, "cy": 150, "r": 80, "name": "Solo Educacionales" },
+            "affiliation_groups": { /* ... */ }
+        },
+        "Gubernamentales": {
+            "coords": { "cx": 275, "cy": 250, "r": 80, "name": "Solo Gubernamentales" },
+            "affiliation_groups": { /* ... */ }
+        },
+        "Civiles/Educacionales": {
+            "coords": { "cx": 275, "cy": 120, "r": 40, "name": "C ∩ E" },
+            "affiliation_groups": { /* ... */ }
+        },
+        "Civiles/Gubernamentales": {
+            "coords": { "cx": 230, "cy": 200, "r": 40, "name": "C ∩ G" },
+            "affiliation_groups": { /* ... */ }
+        },
+        "Educacionales/Gubernamentales": {
+            "coords": { "cx": 320, "cy": 200, "r": 40, "name": "E ∩ G" },
+            "affiliation_groups": { /* ... */ }
+        },
+        "Triple": {
+            "coords": { "cx": 275, "cy": 170, "r": 30, "name": "C ∩ E ∩ G" },
+            "affiliation_groups": { /* ... */ }
+        }
+    };
+    
+    // --- VENN.JS DATA (Tamaños de las áreas) ---
+    // *** AJUSTA ESTOS TAMAÑOS con los conteos reales de tu base de datos ***
+    const ecosystemData = [
+        {sets: ['Civiles'], size: 84, label: 'Sociedad Civil (C)', color: '#1b9e77'},
+        {sets: ['Educacionales'], size: 54, label: 'Educacional (E)', color: '#d95f02'},
+        {sets: ['Gubernamentales'], size: 40, label: 'Gubernamental (G)', color: '#7570b3'},
+        
+        // Intersecciones (debes calcular la suma de labs en cada intersección)
+        {sets: ['Civiles', 'Educacionales'], size: 20},
+        {sets: ['Civiles', 'Gubernamentales'], size: 15},
+        {sets: ['Educacionales', 'Gubernamentales'], size: 12},
+        {sets: ['Civiles', 'Educacionales', 'Gubernamentales'], size: 5}
+    ];
+
+    // --- CONFIGURACIÓN Y FUNCIONES AUXILIARES ---
+    
+    // Mapeo de Colores (AJUSTAR: Añade todas tus Afiliaciones aquí)
+    const AFFILIATION_COLORS = {
+        "Universidad Federal ABC (UFABC)": "#4B54A3", 
+        "Asociación civil u ONG": "#F39C12", 
+        "Independiente": "#27AE60",
+        "None": "#606060", // Color para agrupaciones sin afiliación específica
+        "Firjan/SENAI": "#D8234B",
+        // ... añade el resto de tus afiliaciones
+    };
+
+    function getColorByAffiliation(d) {
+        return AFFILIATION_COLORS[d.affiliation] || "#888888"; 
+    }
+    
+    const DOT_RADIUS = 3;
+    const SPREAD_FACTOR = 0.8; 
+
+    // Función de Posicionamiento Aleatorio (Geometry)
+    function getRandomPositionInCircle(centerX, centerY, radius) {
+        const angle = Math.random() * 2 * Math.PI;
+        const radius_sq = Math.random() * radius * radius;
+        const r_rand = Math.sqrt(radius_sq); 
+
+        return {
+            x: centerX + r_rand * Math.cos(angle),
+            y: centerY + r_rand * Math.sin(angle)
+        };
+    }
+
+    // --- 5. FUNCIÓN DE DIBUJO DEL DIAGRAMA DE VENN ---
+    function drawVennDiagram(sets) {
+        const chart = venn.VennDiagram()
+            .width(600)
+            .height(400);
+
+        d3.select("#venn-diagram-svg-wrapper")
+            .datum(sets)
+            .call(chart)
+            .select("svg")
+            .attr("viewBox", "0 0 600 400"); // Asegura que el SVG sea responsivo
+
+        // Añadir evento de click a las áreas
+        d3.selectAll("#venn-diagram-svg-wrapper .venn-area")
+            .on("click", function(event, d) {
+                // Genera el nombre de la intersección/set para el filtro
+                const filter = d.sets.map(s => s.label).join('/');
+                applyFilter(filter);
+            });
+            
+        // Etiqueta 'All' para resetear
+        d3.select("#venn-diagram-svg-wrapper svg")
+            .append("text")
+            .attr("x", 50)
+            .attr("y", 50)
+            .attr("fill", "white")
+            .attr("cursor", "pointer")
+            .text("Mostrar Todo (171)")
+            .on("click", () => applyFilter('all'));
+    }
+
+    // --- 6. FUNCIÓN DE DIBUJO DE PUNTOS (DOT PLOT) ---
+    function drawDots(dataStructure) {
+        const svg = d3.select("#venn-diagram-svg-wrapper svg");
+        svg.selectAll(".dot-container").remove(); // Limpiar contenedor de puntos
+        
+        const dotGroup = svg.append("g").attr("class", "dot-container");
+        let allDots = [];
+
+        // Iterar sobre las 7 regiones
+        Object.keys(dataStructure).forEach(regionKey => {
+            const regionData = dataStructure[regionKey];
+            const { cx, cy, r } = regionData.coords; 
+            
+            // Iterar sobre los grupos de Afilicación
+            Object.keys(regionData.affiliation_groups).forEach(affiliationKey => {
+                const affiliationGroup = regionData.affiliation_groups[affiliationKey];
+                
+                // Iterar sobre los Subgrupos de Red
+                Object.keys(affiliationGroup.network_subgroups).forEach(networkKey => {
+                    const labCount = affiliationGroup.network_subgroups[networkKey].lab_count;
+
+                    for (let i = 0; i < labCount; i++) {
+                        const position = getRandomPositionInCircle(cx, cy, r * SPREAD_FACTOR); 
+                        
+                        allDots.push({
+                            x: position.x,
+                            y: position.y,
+                            region: regionKey,
+                            affiliation: affiliationKey,
+                            network: networkKey,
+                            id: `${regionKey}-${affiliationKey}-${i}` 
+                        });
+                    }
+                });
+            });
+        });
+
+        // Dibujar los círculos SVG
+        dotGroup.selectAll(".lab-dot")
+            .data(allDots)
+            .enter()
+            .append("circle")
+            .attr("class", "lab-dot")
+            .attr("cx", d => d.x)
+            .attr("cy", d => d.y)
+            .attr("r", 0) // Empezar con radio 0 para animación
+            .attr("fill", getColorByAffiliation) 
+            .attr("opacity", 0.8)
+            .transition()
+            .duration(500)
+            .attr("r", DOT_RADIUS); // Animación de aparición
+            
+        console.log(`Total de ${allDots.length} puntos dibujados.`);
+    }
+
+    // --- 7. FUNCIÓN DE FILTRADO (INTERACCIÓN) ---
+    function applyFilter(filter) {
+        // 1. Manejar el resaltado de las áreas del Venn (solo opacidad)
+        d3.selectAll("#venn-diagram-svg-wrapper .venn-area")
+            .transition()
+            .duration(300)
+            .attr("fill-opacity", function(d) {
+                const areaName = d.sets.map(s => s.label).join('/');
+                if (filter === 'all' || areaName === filter) {
+                    return 0.6; // Opacidad normal
+                }
+                return 0.1; // Desvanecer otras áreas
+            });
+
+        // 2. Manejar el resaltado de los puntos (dots)
+        d3.selectAll(".lab-dot")
+            .transition()
+            .duration(300)
+            .attr("opacity", function(d) {
+                // La lógica del filtro debe coincidir con la REGION (la clave del JSON)
+                if (filter === 'all' || d.region === filter) {
+                    return 0.8;
+                }
+                return 0.1; 
+            });
+    }
+
+    // --- EJECUCIÓN INICIAL ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Dibuja el Venn (las áreas)
+        drawVennDiagram(ecosystemData); 
+        
+        // 2. Dibuja los puntos (dots)
+        drawDots(LAB_STRUCTURE_DATA);
+        
+        // 3. Establece el filtro inicial
+        applyFilter('all');
+    });
+
+</script>
 
 </body>
 </html>
