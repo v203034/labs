@@ -697,3 +697,205 @@ body[data-page="analysis"] .page-menu a[data-page="analysis"] {
         const angle = Math.random() * 2 * Math.PI;
         // Reduce el radio aleatorio para forzar los puntos hacia el centro (menos ruido en bordes)
         const radius_sq
+
+        <script>
+    // --- 1. DATOS DEL USUARIO (JSON) ---
+    // (Se mantienen sus datos LAB_STRUCTURE_DATA)
+    const LAB_STRUCTURE_DATA = {
+        //... (Sus datos JSON de 7 regiones, sin cambios aquí) ...
+        "Civiles": {
+            "coords": {
+                // SUGERENCIA DE AJUSTE: MANTENGA SUS VALORES, PERO SABIENDO QUE SON EL PUNTO CRÍTICO.
+                // Los puntos DEBEN estar DENTRO de un radio 'r' desde el centro 'cx, cy'
+                "cx": 180, "cy": 180, "r": 60, "name": "Solo Civiles" // Reduje r: 120 a r: 60 para evitar dispersión excesiva
+            },
+            // ...
+        },
+        "Civiles/Educacionales": {
+            "coords": {
+                "cx": 320, "cy": 120, "r": 30, "name": "C \u2229 E" // Reduje r: 60 a r: 30 para intersección
+            },
+            // ...
+        },
+        "Civiles/Educacionales/Gubernamentales": {
+            "coords": {
+                "cx": 300, "cy": 250, "r": 20 // Ajuste central: r: 30 a r: 20
+            },
+            // ...
+        },
+        "Civiles/Gubernamentales": {
+            "coords": {
+                "cx": 250, "cy": 280, "r": 40, "name": "C \u2229 G"
+            },
+            // ...
+        },
+        "Educacionales": {
+            "coords": {
+                "cx": 420, "cy": 180, "r": 60, "name": "Solo Educacionales" // Reduje r: 120 a r: 60
+            },
+            // ...
+        },
+        "Educacionales/Gubernamentales": {
+            "coords": {
+                "cx": 380, "cy": 280, "r": 40, "name": "E \u2229 G"
+            },
+            // ...
+        },
+        "Gubernamentales": {
+            "coords": {
+                "cx": 300, "cy": 350, "r": 60, "name": "Solo Gubernamentales" // Reduje r: 120 a r: 60
+            },
+            // ...
+        }
+        //...
+    };
+
+    // --- 2. DATOS CALCULADOS PARA VENN.JS ---
+    const ecosystemData = [
+        {sets: ['Civiles'], size: 62, label: 'Civiles', color: '#1b9e77'},
+        {sets: ['Educacionales'], size: 26, label: 'Educacionales', color: '#d95f02'},
+        {sets: ['Gubernamentales'], size: 9, label: 'Gubernamentales', color: '#7570b3'},
+        
+        {sets: ['Civiles', 'Educacionales'], size: 31},
+        {sets: ['Civiles', 'Gubernamentales'], size: 13},
+        {sets: ['Educacionales', 'Gubernamentales'], size: 28},
+        
+        {sets: ['Civiles', 'Educacionales', 'Gubernamentales'], size: 2}
+    ];
+
+    // --- 3. CONFIGURACIÓN DE COLORES ---
+    const AFFILIATION_COLORS = {
+        "Firjan/SENAI": "#D8234B", 
+        "None": "#606060",
+        "Escola SESI": "#4B54A3",
+        "FAB LAB LIVRE SP": "#1ABC9C",
+        "SENAI": "#F39C12",
+        "Grupo Tiradentes": "#5D6D7E",
+        "Movimento +Social Good": "#A569BD",
+        "Sistema Federación de las industrias del Estado de Paraná (FIEP)": "#45B39D",
+        "Amadomaker": "#F08080",
+        "American Spaces": "#A9CCE3",
+        "Escola Concept": "#FAD7A0",
+        "Fablab Mauá": "#7DCEA0",
+        "Facens": "#5499C7",
+        "Pronto3D": "#CD6155",
+        "Ânima Lab": "#F4D03F",
+        "Enactus": "#85C1E9",
+        "IFMaker": "#D2B4DE",
+        "Lablivre/Wikilab": "#76D7C4"
+    };
+
+    function getColorByAffiliation(d) {
+        return AFFILIATION_COLORS[d.affiliation] || "#888888"; 
+    }
+    
+    const DOT_RADIUS = 3;
+    const SPREAD_FACTOR = 0.8; 
+
+    // --- 4. FUNCIONES DE DIBUJO ---
+
+    // Función de Posicionamiento Aleatorio (Geometry)
+    function getRandomPositionInCircle(centerX, centerY, radius) {
+        // Reducir la dispersión para asegurar que los puntos caigan lejos del borde
+        const r = radius * SPREAD_FACTOR; 
+        
+        const angle = Math.random() * 2 * Math.PI;
+        const radius_sq = Math.random() * r * r; 
+        const random_radius = Math.sqrt(radius_sq);
+        
+        const x = centerX + random_radius * Math.cos(angle);
+        const y = centerY + random_radius * Math.sin(angle);
+        
+        return {x, y};
+    }
+
+    // A. Dibuja el Diagrama de Venn (Usando venn.js y D3)
+    function drawVennDiagram(data, containerId) {
+        const chart = venn.VennDiagram()
+            .width(600)
+            .height(500)
+            .styled(false); // Importante: usamos CSS y estilos manuales
+
+        const svg = d3.select(containerId)
+            .datum(data)
+            .call(chart);
+        
+        // Aplica el estilo personalizado de etiqueta (label)
+        svg.selectAll(".venn-area-label").select("text")
+            .style("fill", "white")
+            .style("font-size", "14px")
+            .style("font-weight", "bold");
+        
+        return svg;
+    }
+
+    // B. Crea y posiciona los puntos
+    function drawDots(svgElement) {
+        let allDotsData = [];
+        let totalDotsCount = 0;
+        
+        // 1. ITERAR SOBRE CADA REGIÓN DEFINIDA POR USTED
+        for (const regionKey in LAB_STRUCTURE_DATA) {
+            const region = LAB_STRUCTURE_DATA[regionKey];
+            const {cx, cy, r} = region.coords;
+            
+            // 2. ITERAR SOBRE CADA GRUPO DE AFILIACIÓN DENTRO DE ESA REGIÓN
+            for (const affiliation in region.affiliation_groups) {
+                const group = region.affiliation_groups[affiliation];
+                
+                // 3. GENERAR PUNTOS PARA CADA LABORATORIO EN EL GRUPO
+                for (let i = 0; i < group.total_labs; i++) {
+                    const {x, y} = getRandomPositionInCircle(cx, cy, r);
+                    
+                    allDotsData.push({
+                        id: totalDotsCount++,
+                        region: regionKey,
+                        affiliation: affiliation,
+                        cx: x,
+                        cy: y
+                    });
+                }
+            }
+        }
+        
+        // 4. DIBUJAR LOS CÍRCULOS (Puntos)
+        svgElement.selectAll(".lab-dot")
+            .data(allDotsData)
+            .enter()
+            .append("circle")
+            .attr("class", d => `lab-dot ${d.region.replace(/[\/\s]/g, '_')}`)
+            .attr("cx", d => d.cx)
+            .attr("cy", d => d.cy)
+            .attr("r", DOT_RADIUS)
+            .style("fill", d => getColorByAffiliation(d))
+            .style("opacity", 0.9)
+            .on("mouseover", function(event, d) {
+                // Opcional: Implemente un tooltip o efecto hover aquí
+                d3.select(this).attr("r", DOT_RADIUS * 1.5).style("stroke", "white").style("stroke-width", 1);
+            })
+            .on("mouseout", function(event, d) {
+                d3.select(this).attr("r", DOT_RADIUS).style("stroke", "none");
+            });
+
+        console.log(`Total de ${totalDotsCount} puntos dibujados.`);
+    }
+
+    // C. Función principal de ejecución
+    function initializeVisualization() {
+        // 1. Dibuja el diagrama de Venn (Genera el SVG)
+        const svg = drawVennDiagram(ecosystemData, "#venn-diagram-svg-wrapper");
+        
+        // 2. Espera a que venn.js termine de dibujar la estructura SVG
+        // y luego dibuja los puntos en el mismo SVG.
+        // Hacemos un pequeño retraso para asegurar que el SVG se haya montado.
+        setTimeout(() => {
+            drawDots(svg);
+        }, 100);
+    }
+
+    // 5. LLAMADA DE EJECUCIÓN: Asegura que se ejecuta cuando la página está cargada
+    window.onload = initializeVisualization;
+    // O mejor:
+    // document.addEventListener('DOMContentLoaded', initializeVisualization);
+    
+</script>
