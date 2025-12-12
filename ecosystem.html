@@ -28,7 +28,7 @@ header {
     border-radius: 15px;
     margin: 20px;
 }
-
+/* ... (Estilos de encabezado y navegación omitidos por brevedad) ... */
 .header-content {
     display: flex;
     flex-direction: column;
@@ -133,14 +133,17 @@ body[data-page="analysis"] .page-menu a[data-page="analysis"] {
     background: rgba(0,0,0,0.12);
 }
 
-/* 2. ESTILOS CSS PARA LA VISUALIZACIÓN */
+/* ESTILOS CSS PARA LA VISUALIZACIÓN */
 #venn-diagram-svg-wrapper {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    /* Establece un tamaño base para la visualización */
+    max-width: 600px; 
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* Estilo de los círculos de la librería Venn.js */
 .venn-area {
     fill-opacity: 0.6;
     stroke: #fff;
@@ -148,7 +151,12 @@ body[data-page="analysis"] .page-menu a[data-page="analysis"] {
     transition: fill-opacity 0.2s;
 }
 
-/* Estilo de los puntos (dots) */
+.venn-area-label text {
+    fill: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .lab-dot {
     stroke: none;
     transition: opacity 0.3s;
@@ -192,72 +200,489 @@ body[data-page="analysis"] .page-menu a[data-page="analysis"] {
 </nav>
 
 <div id="main-content">
-    <p>Haz clic en las áreas del diagrama para filtrar.</p>
+    <h3>Diagrama del Ecosistema de Laboratorios (171 Labs)</h3>
+    <p>Haz clic en las áreas del diagrama para filtrar por región.</p>
     
     <div id="venn-diagram-svg-wrapper"></div>
 </div>
 
 <script>
     
-    // --- IMPORTANTE: REEMPLAZAR ESTO ---
-    // *** DEBES REEMPLAZAR el contenido de LAB_STRUCTURE_DATA con el JSON COMPLETO ***
-    // *** que descargaste del archivo 'lab_structure.json'. ***
-    // (Este es solo un placeholder basado en el preview)
+    // --- 1. DATOS DEL USUARIO (JSON) ---
+    // ESTOS SON LOS DATOS REALES QUE GENERASTE, CON LOS PLACEHOLDERS DE COORDENADAS.
     const LAB_STRUCTURE_DATA = {
         "Civiles": {
-            "coords": { "cx": 200, "cy": 150, "r": 80, "name": "Solo Civiles" },
-            "affiliation_groups": { /* Pegar aquí tus datos reales */ }
-        },
-        "Educacionales": {
-            "coords": { "cx": 350, "cy": 150, "r": 80, "name": "Solo Educacionales" },
-            "affiliation_groups": { /* ... */ }
-        },
-        "Gubernamentales": {
-            "coords": { "cx": 275, "cy": 250, "r": 80, "name": "Solo Gubernamentales" },
-            "affiliation_groups": { /* ... */ }
+            "coords": {
+                // *** AJUSTAR MANUALMENTE DESPUÉS DEL PASO 4 ***
+                "cx": 180, "cy": 180, "r": 120, "name": "Solo Civiles" 
+            },
+            "affiliation_groups": {
+                "Firjan/SENAI": {
+                    "total_labs": 11,
+                    "network_subgroups": {
+                        "Federa\u00e7\u00e3o das Ind\u00fastrias do Estado do Rio de Janeiro (Firjan)/(Servicio Nacional de Aprendizaje Industrial) SENAI": {
+                            "lab_count": 9
+                        },
+                        "Federa\u00e7\u00e3o das Ind\u00fastrias do Estado do Rio de Janeiro (Firjan)/Servicio Nacional de Aprendizaje Industrial (SENAI)": {
+                            "lab_count": 2
+                        }
+                    }
+                },
+                "Grupo Tiradentes": {
+                    "total_labs": 1,
+                    "network_subgroups": {
+                        "Tiradentes Innovation Center": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "Movimento +Social Good": {
+                    "total_labs": 1,
+                    "network_subgroups": {
+                        "Funda\u00e7\u00e3o das Na\u00e7\u00f5es Unidas": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "None": {
+                    "total_labs": 45,
+                    "network_subgroups": {
+                        "Agencia Kerno": {
+                            "lab_count": 1
+                        },
+                        "Caravana Digital SIP": {
+                            "lab_count": 1
+                        },
+                        "Fora do Eixo": {
+                            "lab_count": 1
+                        },
+                        "Grupo de Assessoria de Mobiliza\u00e7\u00e3o de Talentos (GAMT)": {
+                            "lab_count": 1
+                        },
+                        "Lab Maker Living Lab": {
+                            "lab_count": 1
+                        },
+                        "Machado Meyer Advogados": {
+                            "lab_count": 1
+                        },
+                        "Makers Manaus": {
+                            "lab_count": 1
+                        },
+                        "Midia Ninja": {
+                            "lab_count": 1
+                        },
+                        "None": {
+                            "lab_count": 32
+                        },
+                        "O nosso papel ONG": {
+                            "lab_count": 1
+                        },
+                        "Parque Tecnol\u00f3gico de Sorocaba": {
+                            "lab_count": 1
+                        },
+                        "Parque de Desarrollo Tecnol\u00f3gico (PADETEC)": {
+                            "lab_count": 1
+                        },
+                        "SHC - Santos Hacker Clube": {
+                            "lab_count": 1
+                        },
+                        "Servi\u00e7o Brasileiro de Apoio \u00e0s Micro e Pequenas Empresas de Mato Grosso do Sul (SEBRAE MS)": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "SENAI": {
+                    "total_labs": 2,
+                    "network_subgroups": {
+                        "Federa\u00e7\u00e3o das Ind\u00fastrias do Estado de Minas Gerais (FIEMG)": {
+                            "lab_count": 1
+                        },
+                        "Servicio Nacional de Aprendizaje Industrial (SENAI)": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "Sistema Federaci\u00f3n de las industrias del Estado de Paran\u00e1 (FIEP)": {
+                    "total_labs": 2,
+                    "network_subgroups": {
+                        "SESI/SENAI/Instituto Euvaldo Lodi (IEL)": {
+                            "lab_count": 2
+                        }
+                    }
+                }
+            }
         },
         "Civiles/Educacionales": {
-            "coords": { "cx": 275, "cy": 120, "r": 40, "name": "C ∩ E" },
-            "affiliation_groups": { /* ... */ }
+            "coords": {
+                // *** AJUSTAR MANUALMENTE DESPUÉS DEL PASO 4 ***
+                "cx": 320, "cy": 120, "r": 60, "name": "C \u2229 E"
+            },
+            "affiliation_groups": {
+                "Escola SESI": {
+                    "total_labs": 30,
+                    "network_subgroups": {
+                        "Servicio Social de la Industria (SESI)": {
+                            "lab_count": 30
+                        }
+                    }
+                },
+                "None": {
+                    "total_labs": 1,
+                    "network_subgroups": {
+                        "Funda\u00e7\u00e3o Helena Antipoff": {
+                            "lab_count": 1
+                        }
+                    }
+                }
+            }
+        },
+        "Civiles/Educacionales/Gubernamentales": {
+            "coords": {
+                // *** AJUSTAR MANUALMENTE DESPUÉS DEL PASO 4 ***
+                "cx": 300, "cy": 220, "r": 30
+            },
+            "affiliation_groups": {
+                "None": {
+                    "total_labs": 2,
+                    "network_subgroups": {
+                        "SENAI/Universidad Federal de Goi\u00e1s": {
+                            "lab_count": 1
+                        },
+                        "Universidad Estatal de Mato Grosso do Sul (UEMS)/SENAI": {
+                            "lab_count": 1
+                        }
+                    }
+                }
+            }
         },
         "Civiles/Gubernamentales": {
-            "coords": { "cx": 230, "cy": 200, "r": 40, "name": "C ∩ G" },
-            "affiliation_groups": { /* ... */ }
+            "coords": {
+                // *** AJUSTAR MANUALMENTE DESPUÉS DEL PASO 4 ***
+                "cx": 250, "cy": 280, "r": 60, "name": "C \u2229 G"
+            },
+            "affiliation_groups": {
+                "FAB LAB LIVRE SP": {
+                    "total_labs": 13,
+                    "network_subgroups": {
+                        "Pefectura Municipal SP/Instituto de Tecnologia Social (ITS) BRASIL": {
+                            "lab_count": 13
+                        }
+                    }
+                }
+            }
+        },
+        "Educacionales": {
+            "coords": {
+                // *** AJUSTAR MANUALMENTE DESPUÉS DEL PASO 4 ***
+                "cx": 420, "cy": 180, "r": 120, "name": "Solo Educacionales"
+            },
+            "affiliation_groups": {
+                "Amadomaker": {
+                    "total_labs": 1,
+                    "network_subgroups": {
+                        "Universidad de Passo Fundo (UPF)": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "American Spaces": {
+                    "total_labs": 2,
+                    "network_subgroups": {
+                        "ABA": {
+                            "lab_count": 1
+                        },
+                        "Casa Thomas Jefferson/Departamento de Estado de EUA": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "Escola Concept": {
+                    "total_labs": 3,
+                    "network_subgroups": {
+                        "Escola Concept": {
+                            "lab_count": 3
+                        }
+                    }
+                },
+                "Fablab Mau\u00e1": {
+                    "total_labs": 2,
+                    "network_subgroups": {
+                        "Instituto Mau\u00e1 de Tecnologia": {
+                            "lab_count": 2
+                        }
+                    }
+                },
+                "Facens": {
+                    "total_labs": 2,
+                    "network_subgroups": {
+                        "Faculdade de Engenharia de Sorocaba (Facens)": {
+                            "lab_count": 2
+                        }
+                    }
+                },
+                "None": {
+                    "total_labs": 13,
+                    "network_subgroups": {
+                        "Centro Universitario Para\u00edso (UniFAP)": {
+                            "lab_count": 1
+                        },
+                        "Centro Universitario de Excelencia en Guarulhos (ENIAC)": {
+                            "lab_count": 1
+                        },
+                        "Centro universitario de Patos de Minas (Unipam)": {
+                            "lab_count": 1
+                        },
+                        "Escola Castanheiras": {
+                            "lab_count": 1
+                        },
+                        "Funda\u00e7\u00e3o Torino": {
+                            "lab_count": 1
+                        },
+                        "Newton": {
+                            "lab_count": 1
+                        },
+                        "Pontificia Universidad Cat\u00f3lica de R\u00edo Grande del Sur (PUCRS)": {
+                            "lab_count": 1
+                        },
+                        "Sinergia": {
+                            "lab_count": 1
+                        },
+                        "Universidad de Araraquara (Uniara)": {
+                            "lab_count": 1
+                        },
+                        "Universidad de Vale do Rio dos Sinos (Unisinos)": {
+                            "lab_count": 1
+                        },
+                        "Universidad de la Salle (Unilasalle)": {
+                            "lab_count": 1
+                        },
+                        "Universidade Paulista (UNIP)": {
+                            "lab_count": 1
+                        },
+                        "Universidade Presbiteriana Mackenzie": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "Pronto3D": {
+                    "total_labs": 1,
+                    "network_subgroups": {
+                        "Universidad Comunitaria de la regi\u00f3n de Chapec\u00f3 (Unochapec\u00f3)": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "\u00c2nima Lab": {
+                    "total_labs": 2,
+                    "network_subgroups": {
+                        "Centro Universitario de Belo Horizonte (UniBH)": {
+                            "lab_count": 1
+                        },
+                        "S\u00e3o Judas Unimonte": {
+                            "lab_count": 1
+                        }
+                    }
+                }
+            }
         },
         "Educacionales/Gubernamentales": {
-            "coords": { "cx": 320, "cy": 200, "r": 40, "name": "E ∩ G" },
-            "affiliation_groups": { /* ... */ }
+            "coords": {
+                // *** AJUSTAR MANUALMENTE DESPUÉS DEL PASO 4 ***
+                "cx": 380, "cy": 280, "r": 60, "name": "E \u2229 G"
+            },
+            "affiliation_groups": {
+                "Amadomaker": {
+                    "total_labs": 1,
+                    "network_subgroups": {
+                        "Prefectura Municipal de Passo Fundo/Escuela de las profesiones": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "Enactus": {
+                    "total_labs": 1,
+                    "network_subgroups": {
+                        "Universidade Federal do Rio de Janeiro (UFRJ)": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "IFMaker": {
+                    "total_labs": 1,
+                    "network_subgroups": {
+                        "Instituto Federal de Tocantins (IFTO)": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "Lablivre/Wikilab": {
+                    "total_labs": 1,
+                    "network_subgroups": {
+                        "Universidad Federal ABC (UFABC)": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "None": {
+                    "total_labs": 23,
+                    "network_subgroups": {
+                        "\"Instituto Estadual de Educa\u00e7\u00e3o": {
+                            "lab_count": 1
+                        },
+                        "\"Instituto Federal de Educaci\u00f3n": {
+                            "lab_count": 3
+                        },
+                        "\"Instituto Federal de Educa\u00e7\u00e3o": {
+                            "lab_count": 1
+                        },
+                        "Centro de Tecnologia Acad\u00eamica do Instituto de F\u00edsica (CTA IF)/Universidad Federal de R\u00edo Grande del Sur": {
+                            "lab_count": 1
+                        },
+                        "Escola Municipal de Ensino Fundamental Doutor Paulo da Silva Couto": {
+                            "lab_count": 1
+                        },
+                        "Faculdade de Tecnologia de Araraquara (Fatec Arq)-Centro Paula Souza": {
+                            "lab_count": 1
+                        },
+                        "Instituto An\u00edsio Teixeira": {
+                            "lab_count": 1
+                        },
+                        "Instituto de F\u00edsica de la Universidad de SP (IFUSP)": {
+                            "lab_count": 1
+                        },
+                        "Universidad Estatal de Campinas (UNICAMP)": {
+                            "lab_count": 1
+                        },
+                        "Universidad Federal de Mato Grosso (UFMG)": {
+                            "lab_count": 1
+                        },
+                        "Universidad Federal de Mato Grosso (UFMT)": {
+                            "lab_count": 1
+                        },
+                        "Universidad Federal de Para\u00edba (UFPB)": {
+                            "lab_count": 1
+                        },
+                        "Universidad Federal de Rio Grande do Sur (UFRGS)": {
+                            "lab_count": 1
+                        },
+                        "Universidad Federal de R\u00edo Grande del Sur": {
+                            "lab_count": 1
+                        },
+                        "Universidad Federal de Santa Catarina (UFSC)": {
+                            "lab_count": 1
+                        },
+                        "Universidad Federal de S\u00e3o Carlos (UFSCar)": {
+                            "lab_count": 1
+                        },
+                        "Universidad Federal del Oeste de Bahia (UFOB)": {
+                            "lab_count": 1
+                        },
+                        "Universidad de Blumenau (FURB)": {
+                            "lab_count": 1
+                        },
+                        "Universidade Estadual Paulista (UNESP)/Sagui lab": {
+                            "lab_count": 1
+                        },
+                        "Universidade Federal do Piau\u00ed (UFPI)": {
+                            "lab_count": 1
+                        },
+                        "Universidade Federal do Rio de Janeiro (UFRJ)": {
+                            "lab_count": 1
+                        }
+                    }
+                },
+                "Pronto3D": {
+                    "total_labs": 1,
+                    "network_subgroups": {
+                        "Universidad Federal de Santa Catarina (UFSC)": {
+                            "lab_count": 1
+                        }
+                    }
+                }
+            }
         },
-        "Triple": {
-            "coords": { "cx": 275, "cy": 170, "r": 30, "name": "C ∩ E ∩ G" },
-            "affiliation_groups": { /* ... */ }
+        "Gubernamentales": {
+            "coords": {
+                // *** AJUSTAR MANUALMENTE DESPUÉS DEL PASO 4 ***
+                "cx": 300, "cy": 350, "r": 120, "name": "Solo Gubernamentales"
+            },
+            "affiliation_groups": {
+                "None": {
+                    "total_labs": 9,
+                    "network_subgroups": {
+                        "C\u00e1mara de Diputados Federal": {
+                            "lab_count": 1
+                        },
+                        "Ministerio de cuitura": {
+                            "lab_count": 1
+                        },
+                        "Ministerio de cultura": {
+                            "lab_count": 1
+                        },
+                        "Prefectura Jundia\u00ed": {
+                            "lab_count": 1
+                        },
+                        "Prefectura Municipal Araras": {
+                            "lab_count": 1
+                        },
+                        "Prefectura Municipal de Curitiba": {
+                            "lab_count": 1
+                        },
+                        "Prefectura de Santos": {
+                            "lab_count": 1
+                        },
+                        "Secretaria Municipal de Cultura y Econom\u00eda Creativa": {
+                            "lab_count": 1
+                        },
+                        "Secretaria Municipal de Inova\u00e7\u00e3o e Tecnologia": {
+                            "lab_count": 1
+                        }
+                    }
+                }
+            }
         }
     };
     
-    // --- VENN.JS DATA (Tamaños de las áreas) ---
-    // *** AJUSTA ESTOS TAMAÑOS con los conteos reales de tu base de datos ***
+    // --- 2. DATOS CALCULADOS PARA VENN.JS ---
+    // ESTOS SON LOS TAMAÑOS REALES CALCULADOS DESDE SU JSON (Total: 171)
     const ecosystemData = [
-        {sets: ['Civiles'], size: 84, label: 'Sociedad Civil (C)', color: '#1b9e77'},
-        {sets: ['Educacionales'], size: 54, label: 'Educacional (E)', color: '#d95f02'},
-        {sets: ['Gubernamentales'], size: 40, label: 'Gubernamental (G)', color: '#7570b3'},
+        // Sets puros (Total de labs que caen SÓLO en esa región)
+        {sets: ['Civiles'], size: 62, label: 'Civiles', color: '#1b9e77'},
+        {sets: ['Educacionales'], size: 26, label: 'Educacionales', color: '#d95f02'},
+        {sets: ['Gubernamentales'], size: 9, label: 'Gubernamentales', color: '#7570b3'},
         
-        // Intersecciones (debes calcular la suma de labs en cada intersección)
-        {sets: ['Civiles', 'Educacionales'], size: 20},
-        {sets: ['Civiles', 'Gubernamentales'], size: 15},
-        {sets: ['Educacionales', 'Gubernamentales'], size: 12},
-        {sets: ['Civiles', 'Educacionales', 'Gubernamentales'], size: 5}
+        // Intersecciones (Total de labs que caen SÓLO en esa intersección)
+        {sets: ['Civiles', 'Educacionales'], size: 31},
+        {sets: ['Civiles', 'Gubernamentales'], size: 13},
+        {sets: ['Educacionales', 'Gubernamentales'], size: 28},
+        
+        // Intersección triple
+        {sets: ['Civiles', 'Educacionales', 'Gubernamentales'], size: 2}
     ];
 
-    // --- CONFIGURACIÓN Y FUNCIONES AUXILIARES ---
-    
-    // Mapeo de Colores (AJUSTAR: Añade todas tus Afiliaciones aquí)
+    // --- 3. CONFIGURACIÓN DE COLORES ---
+    // (Utilizamos un esquema de color para las afiliaciones más grandes y un color por defecto)
     const AFFILIATION_COLORS = {
-        "Universidad Federal ABC (UFABC)": "#4B54A3", 
-        "Asociación civil u ONG": "#F39C12", 
-        "Independiente": "#27AE60",
-        "None": "#606060", // Color para agrupaciones sin afiliación específica
-        "Firjan/SENAI": "#D8234B",
-        // ... añade el resto de tus afiliaciones
+        "Firjan/SENAI": "#D8234B", 
+        "None": "#606060",
+        "Escola SESI": "#4B54A3",
+        "FAB LAB LIVRE SP": "#1ABC9C",
+        "SENAI": "#F39C12",
+        // Afiliaciones con un color genérico o un color único si lo deseas
+        "Grupo Tiradentes": "#5D6D7E",
+        "Movimento +Social Good": "#A569BD",
+        "Sistema Federaci\u00f3n de las industrias del Estado de Paran\u00e1 (FIEP)": "#45B39D",
+        "Amadomaker": "#F08080",
+        "American Spaces": "#A9CCE3",
+        "Escola Concept": "#FAD7A0",
+        "Fablab Mau\u00e1": "#7DCEA0",
+        "Facens": "#5499C7",
+        "Pronto3D": "#CD6155",
+        "\u00c2nima Lab": "#F4D03F",
+        "Enactus": "#85C1E9",
+        "IFMaker": "#D2B4DE",
+        "Lablivre/Wikilab": "#76D7C4"
+        // Asegúrate de añadir cualquier otra afiliación clave
     };
 
     function getColorByAffiliation(d) {
@@ -270,141 +695,5 @@ body[data-page="analysis"] .page-menu a[data-page="analysis"] {
     // Función de Posicionamiento Aleatorio (Geometry)
     function getRandomPositionInCircle(centerX, centerY, radius) {
         const angle = Math.random() * 2 * Math.PI;
-        const radius_sq = Math.random() * radius * radius;
-        const r_rand = Math.sqrt(radius_sq); 
-
-        return {
-            x: centerX + r_rand * Math.cos(angle),
-            y: centerY + r_rand * Math.sin(angle)
-        };
-    }
-
-    // --- 5. FUNCIÓN DE DIBUJO DEL DIAGRAMA DE VENN ---
-    function drawVennDiagram(sets) {
-        const chart = venn.VennDiagram()
-            .width(600)
-            .height(400);
-
-        d3.select("#venn-diagram-svg-wrapper")
-            .datum(sets)
-            .call(chart)
-            .select("svg")
-            .attr("viewBox", "0 0 600 400"); // Asegura que el SVG sea responsivo
-
-        // Añadir evento de click a las áreas
-        d3.selectAll("#venn-diagram-svg-wrapper .venn-area")
-            .on("click", function(event, d) {
-                // Genera el nombre de la intersección/set para el filtro
-                const filter = d.sets.map(s => s.label).join('/');
-                applyFilter(filter);
-            });
-            
-        // Etiqueta 'All' para resetear
-        d3.select("#venn-diagram-svg-wrapper svg")
-            .append("text")
-            .attr("x", 50)
-            .attr("y", 50)
-            .attr("fill", "white")
-            .attr("cursor", "pointer")
-            .text("Mostrar Todo (171)")
-            .on("click", () => applyFilter('all'));
-    }
-
-    // --- 6. FUNCIÓN DE DIBUJO DE PUNTOS (DOT PLOT) ---
-    function drawDots(dataStructure) {
-        const svg = d3.select("#venn-diagram-svg-wrapper svg");
-        svg.selectAll(".dot-container").remove(); // Limpiar contenedor de puntos
-        
-        const dotGroup = svg.append("g").attr("class", "dot-container");
-        let allDots = [];
-
-        // Iterar sobre las 7 regiones
-        Object.keys(dataStructure).forEach(regionKey => {
-            const regionData = dataStructure[regionKey];
-            const { cx, cy, r } = regionData.coords; 
-            
-            // Iterar sobre los grupos de Afilicación
-            Object.keys(regionData.affiliation_groups).forEach(affiliationKey => {
-                const affiliationGroup = regionData.affiliation_groups[affiliationKey];
-                
-                // Iterar sobre los Subgrupos de Red
-                Object.keys(affiliationGroup.network_subgroups).forEach(networkKey => {
-                    const labCount = affiliationGroup.network_subgroups[networkKey].lab_count;
-
-                    for (let i = 0; i < labCount; i++) {
-                        const position = getRandomPositionInCircle(cx, cy, r * SPREAD_FACTOR); 
-                        
-                        allDots.push({
-                            x: position.x,
-                            y: position.y,
-                            region: regionKey,
-                            affiliation: affiliationKey,
-                            network: networkKey,
-                            id: `${regionKey}-${affiliationKey}-${i}` 
-                        });
-                    }
-                });
-            });
-        });
-
-        // Dibujar los círculos SVG
-        dotGroup.selectAll(".lab-dot")
-            .data(allDots)
-            .enter()
-            .append("circle")
-            .attr("class", "lab-dot")
-            .attr("cx", d => d.x)
-            .attr("cy", d => d.y)
-            .attr("r", 0) // Empezar con radio 0 para animación
-            .attr("fill", getColorByAffiliation) 
-            .attr("opacity", 0.8)
-            .transition()
-            .duration(500)
-            .attr("r", DOT_RADIUS); // Animación de aparición
-            
-        console.log(`Total de ${allDots.length} puntos dibujados.`);
-    }
-
-    // --- 7. FUNCIÓN DE FILTRADO (INTERACCIÓN) ---
-    function applyFilter(filter) {
-        // 1. Manejar el resaltado de las áreas del Venn (solo opacidad)
-        d3.selectAll("#venn-diagram-svg-wrapper .venn-area")
-            .transition()
-            .duration(300)
-            .attr("fill-opacity", function(d) {
-                const areaName = d.sets.map(s => s.label).join('/');
-                if (filter === 'all' || areaName === filter) {
-                    return 0.6; // Opacidad normal
-                }
-                return 0.1; // Desvanecer otras áreas
-            });
-
-        // 2. Manejar el resaltado de los puntos (dots)
-        d3.selectAll(".lab-dot")
-            .transition()
-            .duration(300)
-            .attr("opacity", function(d) {
-                // La lógica del filtro debe coincidir con la REGION (la clave del JSON)
-                if (filter === 'all' || d.region === filter) {
-                    return 0.8;
-                }
-                return 0.1; 
-            });
-    }
-
-    // --- EJECUCIÓN INICIAL ---
-    document.addEventListener('DOMContentLoaded', () => {
-        // 1. Dibuja el Venn (las áreas)
-        drawVennDiagram(ecosystemData); 
-        
-        // 2. Dibuja los puntos (dots)
-        drawDots(LAB_STRUCTURE_DATA);
-        
-        // 3. Establece el filtro inicial
-        applyFilter('all');
-    });
-
-</script>
-
-</body>
-</html>
+        // Reduce el radio aleatorio para forzar los puntos hacia el centro (menos ruido en bordes)
+        const radius_sq
